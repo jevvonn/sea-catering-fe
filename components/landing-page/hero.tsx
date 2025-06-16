@@ -12,7 +12,7 @@ import { Button } from "../ui/button";
 
 const HeroSection = () => {
   return (
-    <section className="relative">
+    <section className="relative pb-10">
       <Image
         src="/utils/circle.svg"
         alt="Circle Decoration"
@@ -30,7 +30,7 @@ const HeroSection = () => {
         className="absolute top-0 -z-10 right-0"
       />
 
-      <div className="text-center space-y-8 z-0">
+      <div className="text-center space-y-8  md:space-y-10 z-0">
         <div>
           <Badge variant="default" className="text-xl sm:text-3xl mb-2 py-2">
             SEA Catering
@@ -54,7 +54,7 @@ const HeroSection = () => {
           and delivered fresh to every corner of Indonesia.
         </p>
 
-        <Button className="px-4 py-6" variant="outline">
+        <Button className="px-4 py-6 lg:mt-10" variant="outline">
           <span className="text-lg">See Our Menu</span>
           <ArrowUpRightIcon />
         </Button>
