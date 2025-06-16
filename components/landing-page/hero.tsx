@@ -19,7 +19,7 @@ const HeroSection = () => {
         width={400}
         height={400}
         draggable={false}
-        className="absolute top-0 -z-10 left-0"
+        className="absolute bottom-0 -z-10 left-0"
       />
       <Image
         src="/utils/circle.svg"
