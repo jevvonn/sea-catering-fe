@@ -21,9 +21,6 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
   const [opacity, setOpacity] = useState<number>(0);
 
   const handleMouseMove: React.MouseEventHandler<HTMLDivElement> = (e) => {
-    console.log("Mouse move event triggered");
-    console.log("isFocused:", isFocused);
-    console.log("divRef.current:", divRef.current);
     if (!divRef.current || isFocused) return;
 
     const rect = divRef.current.getBoundingClientRect();
@@ -41,7 +38,6 @@ const SpotlightCard: React.FC<SpotlightCardProps> = ({
   };
 
   const handleMouseEnter = () => {
-    console.log("Mouse enter event triggered");
     setOpacity(0.6);
   };
 
