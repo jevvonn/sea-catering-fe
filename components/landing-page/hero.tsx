@@ -16,16 +16,16 @@ const HeroSection = () => {
       <Image
         src="/utils/circle.svg"
         alt="Circle Decoration"
-        width={500}
-        height={500}
+        width={400}
+        height={400}
         draggable={false}
         className="absolute top-0 -z-10 left-0"
       />
       <Image
         src="/utils/circle.svg"
         alt="Circle Decoration"
-        width={500}
-        height={500}
+        width={400}
+        height={400}
         draggable={false}
         className="absolute top-0 -z-10 right-0"
       />
