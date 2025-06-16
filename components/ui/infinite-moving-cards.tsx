@@ -3,6 +3,7 @@
 import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import SpotlightCard from "./spotlight-card";
+import RatingInput from "./rating-input";
 
 export const InfiniteMovingCards = ({
   items,
@@ -14,7 +15,7 @@ export const InfiniteMovingCards = ({
   items: {
     quote: string;
     name: string;
-    title: string;
+    rating: number;
   }[];
   direction?: "left" | "right";
   speed?: "fast" | "normal" | "slow";
@@ -104,9 +105,7 @@ export const InfiniteMovingCards = ({
                 <span className="text-sm leading-[1.6] font-normal text-neutral-500 dark:text-gray-400">
                   {item.name}
                 </span>
-                <span className="text-sm leading-[1.6] font-normal text-neutral-500 dark:text-gray-400">
-                  {item.title}
-                </span>
+                <RatingInput value={item.rating} allowHalf={true} size="sm" />
               </span>
             </div>
           </SpotlightCard>

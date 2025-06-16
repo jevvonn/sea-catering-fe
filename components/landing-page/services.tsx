@@ -31,7 +31,7 @@ const ServicesSection = () => {
         className="absolute bottom-0 -z-10 right-0"
       />
 
-      <h2 className="text-3xl font-semibold text-center">Our Services</h2>
+      <h2 className="text-3xl font-semibold text-center">What We Provides?</h2>
 
       <div className="flex flex-col-reverse md:flex-row justify-between gap-10">
         <div className="w-full md:w-1/2 flex flex-col justify-between">

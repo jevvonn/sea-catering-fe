@@ -8,70 +8,71 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "../ui/textarea";
 import RatingInput from "../ui/rating-input";
+import Image from "next/image";
 
 const testimonials: {
   quote: string;
   name: string;
-  title: string;
+  rating: number;
 }[] = [
   {
     quote:
       "Makanannya enak, sehat, dan bisa diatur sesuai kebutuhan dietku. Totally recommended!",
     name: "Siti Aulia",
-    title: "Ibu Rumah Tangga, Jakarta",
+    rating: 4.5,
   },
   {
     quote:
       "I love how I can customize my meal plan and get it delivered right to my door.",
     name: "Andre Pratama",
-    title: "Software Engineer, Bandung",
+    rating: 5,
   },
   {
     quote:
       "Pilihan makanannya banyak dan semuanya sehat. Cocok banget buat yang sibuk kerja.",
     name: "Dina Kartika",
-    title: "Marketing Executive, Surabaya",
+    rating: 4,
   },
   {
     quote:
       "SEA Catering changed the way I eat. It's convenient, healthy, and surprisingly affordable.",
     name: "Rizky Ramadhan",
-    title: "Fitness Trainer, Bali",
+    rating: 5,
   },
   {
     quote:
       "Semenjak pakai SEA Catering, berat badan jadi lebih terkontrol tanpa harus masak sendiri.",
     name: "Intan Lestari",
-    title: "Mahasiswi, Yogyakarta",
+    rating: 4.5,
   },
   {
     quote:
       "The nutrition breakdown on the app helps me track my calories and macros easily.",
     name: "David Santoso",
-    title: "UI/UX Designer, Tangerang",
+    rating: 4,
   },
   {
     quote: "Delivery-nya selalu tepat waktu dan makanannya masih fresh!",
     name: "Galih Permana",
-    title: "Karyawan Swasta, Malang",
+    rating: 3.5,
   },
   {
     quote:
       "With SEA Catering, eating healthy is no longer a hassle. I just tap and it's done.",
     name: "Anisa Nurhaliza",
-    title: "Content Creator, Jakarta",
+    rating: 4.5,
   },
   {
     quote:
       "Akhirnya nemu catering yang bisa disesuaikan dengan alergi dan pantangan makanan saya.",
     name: "Yosep Hadiman",
-    title: "Dokter Umum, Semarang",
+    rating: 4,
   },
   {
     quote:
       "Very user-friendly service and the app makes everything even easier!",
     name: "Clara Wijaya",
-    title: "Entrepreneur, Medan",
+    rating: 5,
   },
 ];
 
@@ -79,9 +80,7 @@ const TestimonialsSection = () => {
   return (
     <>
       <section className="mt-10">
-        <h2 className="text-3xl font-semibold text-center">
-          What People Say ?
-        </h2>
+        <h2 className="text-3xl font-semibold text-center">What People Say?</h2>
 
         <div className="mt-10 cursor-default">
           <InfiniteMovingCards
@@ -97,7 +96,25 @@ const TestimonialsSection = () => {
         </div>
       </section>
 
-      <section className="mt-10 pb-10">
+      <section className="mt-10 pb-10 relative">
+        <Image
+          src="/utils/circle.svg"
+          alt="Circle Decoration"
+          width={400}
+          height={400}
+          draggable={false}
+          className="absolute top-0 -z-10 hidden md:block left-0"
+        />
+
+        <Image
+          src="/utils/circle.svg"
+          alt="Circle Decoration"
+          width={400}
+          height={400}
+          draggable={false}
+          className="absolute bottom-0 -z-10 hidden md:block right-0"
+        />
+
         <h2 className="text-3xl font-semibold text-center">
           Share Your Experience
         </h2>
@@ -136,7 +153,7 @@ function TestimonialForm({ className, ...props }: React.ComponentProps<"div">) {
 
               <div className="grid gap-3">
                 <Label htmlFor="message">Rating</Label>
-                <RatingInput maxRating={5} />
+                <RatingInput maxRating={5} allowHalf />
               </div>
               <Button type="submit" className="w-full">
                 Send Testimonial
