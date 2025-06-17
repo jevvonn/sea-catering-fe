@@ -1,7 +1,12 @@
 import Logo from "@/components/assets/logo";
 import SignUpForm from "@/components/auth/sign-up-form";
+import { Metadata } from "next";
 import Image from "next/image";
 import React from "react";
+
+export const metadata: Metadata = {
+  title: "Sign Up",
+};
 
 const SignUpPage = () => {
   return (
