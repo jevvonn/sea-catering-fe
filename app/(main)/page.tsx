@@ -1,3 +1,4 @@
+import ContactSection from "@/components/landing-page/contact-section";
 import HeroSection from "@/components/landing-page/hero";
 import ServicesSection from "@/components/landing-page/services";
 import TestimonialsSection from "@/components/landing-page/testimonials";
@@ -8,6 +9,7 @@ export default function Home() {
       <HeroSection />
       <ServicesSection />
       <TestimonialsSection />
+      <ContactSection />
     </main>
   );
 }
