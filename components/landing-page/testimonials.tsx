@@ -80,7 +80,9 @@ const TestimonialsSection = () => {
   return (
     <>
       <section className="mt-10">
-        <h2 className="text-3xl font-semibold text-center">What People Say?</h2>
+        <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-4xl md:text-5xl">
+          What People Say?
+        </h2>
 
         <div className="mt-10 cursor-default">
           <InfiniteMovingCards
@@ -115,8 +117,8 @@ const TestimonialsSection = () => {
           className="absolute bottom-0 -z-10 hidden md:block right-0"
         />
 
-        <h2 className="text-3xl font-semibold text-center">
-          Share Your Experience
+        <h2 className="text-3xl font-bold tracking-tighter text-center sm:text-4xl md:text-5xl">
+          Share Your Experience!
         </h2>
 
         <TestimonialForm className="mt-10" />
