@@ -9,7 +9,7 @@ import {
 import Logo from "../assets/logo";
 import Image from "next/image";
 
-export default function MainFooter() {
+const MainFooter = () => {
   return (
     <footer className="bg-background border-t relative overflow-hidden">
       <Image
@@ -107,4 +107,6 @@ export default function MainFooter() {
       </div>
     </footer>
   );
-}
+};
+
+export default MainFooter;
