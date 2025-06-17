@@ -55,7 +55,7 @@ const Navbar = () => {
         </ul>
 
         <div className="hidden md:block">
-          <Link href={`/login`}>
+          <Link href={`/sign-in`}>
             <Button variant="outline">Sign In</Button>
           </Link>
         </div>

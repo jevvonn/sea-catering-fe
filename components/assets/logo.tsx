@@ -1,11 +1,16 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-const Logo = () => {
+const Logo = ({ className, ...props }: React.ComponentProps<"a">) => {
   return (
     <Link
       href={`/`}
-      className="select-none flex gap-2 items-center"
+      {...props}
+      className={cn(
+        "select-none flex text-lg md:text-xl text-primary gap-2 items-center",
+        className
+      )}
       draggable={false}
     >
       <Image
@@ -15,9 +20,7 @@ const Logo = () => {
         height={100}
         priority
       />
-      <h1 className="text-lg md:text-xl text-primary font-bold italic">
-        SEA Catering
-      </h1>
+      <h1 className="font-bold italic">SEA Catering</h1>
     </Link>
   );
 };
