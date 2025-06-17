@@ -54,8 +54,8 @@ const HeroSection = () => {
           and delivered fresh to every corner of Indonesia.
         </p>
 
-        <Button className="px-4 py-6 lg:mt-14" variant="outline">
-          <span className="text-lg">See Our Menu</span>
+        <Button className="md:px-4 py-6 lg:mt-14" variant="outline">
+          <span className="md:text-lg">See Our Menu</span>
           <ArrowUpRightIcon />
         </Button>
       </div>

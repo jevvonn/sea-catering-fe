@@ -79,7 +79,7 @@ export const InfiniteMovingCards = ({
       key={`infinite-moving-cards-${direction}`}
       ref={containerRef}
       className={cn(
-        "scroller relative z-20 max-w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
+        "scroller relative z-20 max-w-full overflow-hidden [mask-image:linear-gradient(to_right,transparent,white_5%,white_95%,transparent)] md:[mask-image:linear-gradient(to_right,transparent,white_10%,white_90%,transparent)]",
         className
       )}
     >
@@ -105,7 +105,12 @@ export const InfiniteMovingCards = ({
                 <span className="text-sm leading-[1.6] font-normal text-neutral-500 dark:text-gray-400">
                   {item.name}
                 </span>
-                <RatingInput value={item.rating} allowHalf={true} size="sm" />
+                <RatingInput
+                  value={item.rating}
+                  allowHalf={true}
+                  size="sm"
+                  readonly
+                />
               </span>
             </div>
           </SpotlightCard>

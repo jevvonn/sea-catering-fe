@@ -4,7 +4,7 @@ import TestimonialsSection from "@/components/landing-page/testimonials";
 
 export default function Home() {
   return (
-    <main className="pt-5 md:pt-10 px-12 relative">
+    <main className="pt-5 md:pt-10 px-4 md:px-10 relative">
       <HeroSection />
       <ServicesSection />
       <TestimonialsSection />
