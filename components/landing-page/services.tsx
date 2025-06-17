@@ -4,7 +4,7 @@ import { ArrowUpRightIcon } from "lucide-react";
 
 const ServicesSection = () => {
   return (
-    <section className="pb-10 md:px-12 relative space-y-10 md:space-y-16">
+    <section className="pb-10 md:px-12 relative space-y-4 md:space-y-16">
       <Image
         src="/utils/circle.svg"
         alt="Circle Decoration"
@@ -38,8 +38,10 @@ const ServicesSection = () => {
       <div className="flex flex-col-reverse md:flex-row justify-between gap-10">
         <div className="w-full md:w-1/2 flex flex-col justify-between">
           <div>
-            <h3 className="text-3xl font-bold">Meal Customization</h3>
-            <p className="text-gray-600 mt-4 text-justify">
+            <h3 className="text-2xl md:text-3xl font-bold">
+              Meal Customization
+            </h3>
+            <p className="text-gray-600 mt-4 text-justify text-sm md:text-base">
               Customize your meals to fit your dietary needs and preferences.
               Choose from a variety of ingredients and meal plans that suit your
               lifestyle. Enjoy flexible portion sizes, allergen-friendly
@@ -80,10 +82,10 @@ const ServicesSection = () => {
 
         <div className="w-full md:w-1/2 flex flex-col justify-between">
           <div>
-            <h3 className="text-3xl font-bold">
+            <h3 className="text-2xl md:text-3xl font-bold">
               Easy Delivery to Major Cities
             </h3>
-            <p className="text-gray-600 mt-4 text-justify">
+            <p className="text-gray-600 mt-4 text-sm md:text-base text-justify">
               Enjoy the convenience of our meal delivery service, available in
               major cities across Indonesia. We ensure that your meals are
               delivered fresh and on time, so you can focus on what matters
@@ -105,10 +107,10 @@ const ServicesSection = () => {
       <div className="flex flex-col-reverse md:flex-row justify-between gap-10">
         <div className="w-full md:w-1/2 flex flex-col justify-between">
           <div>
-            <h3 className="text-3xl font-bold">
+            <h3 className="text-2xl md:text-3xl font-bold">
               Detailed Nutritional Information
             </h3>
-            <p className="text-gray-600 mt-4 text-justify">
+            <p className="text-gray-600 mt-4 text-sm md:text-base text-justify">
               Stay informed about what you eat with our detailed nutritional
               information for every meal. We provide clear labels on calories,
               and ingredients, so you can make informed choices that align with
