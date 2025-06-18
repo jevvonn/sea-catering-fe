@@ -75,7 +75,7 @@ const MEAL_PLANS = [
   },
 ];
 
-const MenuPage = () => {
+const MealPlansPage = () => {
   return (
     <div className="min-h-screen">
       <div className="max-w-6xl mx-auto px-4 py-8">
@@ -244,4 +244,4 @@ const MenuPage = () => {
   );
 };
 
-export default MenuPage;
+export default MealPlansPage;
