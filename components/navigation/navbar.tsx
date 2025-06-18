@@ -6,9 +6,12 @@ import { Sheet, SheetContent, SheetFooter } from "@/components/ui/sheet";
 import { useState } from "react";
 import { MenuIcon } from "lucide-react";
 import Logo from "../assets/logo";
+import { cn } from "@/lib/utils";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
   const navigationLinks: { title: string; href: string }[] = [
     {
       title: "Home",
@@ -24,7 +27,7 @@ const Navbar = () => {
     },
     {
       title: "Contact Us",
-      href: "/",
+      href: "/contact",
     },
   ];
 
@@ -41,12 +44,18 @@ const Navbar = () => {
         >
           <MenuIcon />
         </Button>
-        <ul className="items-center gap-6 hidden md:flex">
+        <ul className="items-center gap-6 hidden md:flex flex-1 justify-center">
           {navigationLinks.map((link, idx) => (
             <li key={idx}>
               <Link
                 href={link.href}
-                className="hover:bg-slate-100 transition-all rounded-md px-4 py-2 "
+                className={cn(
+                  `hover:bg-slate-100 transition-all hover:text-foreground rounded-sm p-4 py-2`,
+                  {
+                    "bg-primary text-primary-foreground":
+                      link.href === pathname,
+                  }
+                )}
               >
                 {link.title}
               </Link>
