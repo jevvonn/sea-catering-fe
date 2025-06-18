@@ -9,14 +9,14 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import {
-  Star,
-  Clock,
-  Leaf,
-  Zap,
-  Crown,
-  Check,
-  ChefHat,
+  StarIcon,
+  ClockIcon,
+  CheckIcon,
+  ChefHatIcon,
   ArrowUpRightIcon,
+  LeafIcon,
+  ZapIcon,
+  CrownIcon,
 } from "lucide-react";
 
 const MEAL_PLANS = [
@@ -24,7 +24,7 @@ const MEAL_PLANS = [
     id: "diet",
     name: "Diet Plan",
     price: 30000,
-    icon: <Leaf className="w-8 h-8" />,
+    icon: <LeafIcon className="w-8 h-8" />,
     color: "bg-green-500",
     borderColor: "border-green-500",
     description: "Perfect for healthy weight management",
@@ -42,7 +42,7 @@ const MEAL_PLANS = [
     id: "protein",
     name: "Protein Plan",
     price: 40000,
-    icon: <Zap className="w-8 h-8" />,
+    icon: <ZapIcon className="w-8 h-8" />,
     color: "bg-primary",
     borderColor: "border-primary",
     description: "Ideal for muscle building & active lifestyle",
@@ -60,7 +60,7 @@ const MEAL_PLANS = [
     id: "royal",
     name: "Royal Plan",
     price: 60000,
-    icon: <Crown className="w-8 h-8" />,
+    icon: <CrownIcon className="w-8 h-8" />,
     color: "bg-purple-500",
     borderColor: "border-purple-500",
     description: "Premium experience",
@@ -101,7 +101,7 @@ const MealPlansPage = () => {
               {plan.popular && (
                 <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
                   <Badge className="bg-primary text-white px-4 py-1">
-                    <Star className="w-3 h-3 mr-1" />
+                    <StarIcon className="w-3 h-3 mr-1" />
                     Most Popular
                   </Badge>
                 </div>
@@ -135,7 +135,7 @@ const MealPlansPage = () => {
                       className={`w-full ${plan.color} hover:${plan.color} hover:opacity-90 text-white`}
                       size="lg"
                     >
-                      <ChefHat className="w-4 h-4 mr-2" />
+                      <ChefHatIcon className="w-4 h-4 mr-2" />
                       See Benefits
                     </Button>
                   </DialogTrigger>
@@ -156,28 +156,28 @@ const MealPlansPage = () => {
 
                     <div className="flex items-center flex-wrap gap-2 justify-center">
                       <Badge variant={`outline`} className="text-sm">
-                        <Check className="w-3 h-3 text-green-500" />
+                        <CheckIcon className="w-3 h-3 text-green-500" />
                         Breakfast
                       </Badge>
                       <Badge variant={`outline`} className="text-sm">
-                        <Check className="w-3 h-3 text-green-500" />
+                        <CheckIcon className="w-3 h-3 text-green-500" />
                         Lunch
                       </Badge>
                       <Badge variant={`outline`} className="text-sm">
-                        <Check className="w-3 h-3 text-green-500" />
+                        <CheckIcon className="w-3 h-3 text-green-500" />
                         Dinner
                       </Badge>
                     </div>
 
                     <div className="p-4 bg-gray-50 rounded-md">
                       <h4 className="font-semibold mb-2 flex items-center gap-2">
-                        <Clock className="w-4 h-4" />
+                        <ClockIcon className="w-4 h-4" />
                         Plan Benefits
                       </h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm text-gray-600">
                         {plan.features.map((feature, idx) => (
                           <div key={idx} className="flex items-center gap-2">
-                            <Check className="w-3 h-3 text-green-500" />
+                            <CheckIcon className="w-3 h-3 text-green-500" />
                             {feature}
                           </div>
                         ))}
@@ -211,7 +211,7 @@ const MealPlansPage = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-2">
               <div className="text-center">
                 <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Leaf className="w-6 h-6 text-green-600" />
+                  <LeafIcon className="w-6 h-6 text-green-600" />
                 </div>
                 <h4 className="font-semibold mb-2">Fresh Ingredients</h4>
                 <p className="text-sm text-gray-600">
@@ -220,7 +220,7 @@ const MealPlansPage = () => {
               </div>
               <div className="text-center">
                 <div className="bg-blue-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Clock className="w-6 h-6 text-blue-600" />
+                  <ClockIcon className="w-6 h-6 text-blue-600" />
                 </div>
                 <h4 className="font-semibold mb-2">On-Time Delivery</h4>
                 <p className="text-sm text-gray-600">
@@ -229,7 +229,7 @@ const MealPlansPage = () => {
               </div>
               <div className="text-center">
                 <div className="bg-purple-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <ChefHat className="w-6 h-6 text-purple-600" />
+                  <ChefHatIcon className="w-6 h-6 text-purple-600" />
                 </div>
                 <h4 className="font-semibold mb-2">Chef Prepared</h4>
                 <p className="text-sm text-gray-600">
