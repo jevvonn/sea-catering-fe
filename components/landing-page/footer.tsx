@@ -39,25 +39,25 @@ const MainFooter = () => {
           <nav className="flex flex-col md:flex-row md:justify-center gap-4 md:gap-8">
             <Link
               href="/"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-gray-600 hover:text-foreground transition-colors"
             >
               Home
             </Link>
             <Link
               href="/menu"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-gray-600 hover:text-foreground transition-colors"
             >
               Menu
             </Link>
             <Link
               href="/plans"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-gray-600 hover:text-foreground transition-colors"
             >
               Plans
             </Link>
             <Link
               href="/contact"
-              className="text-muted-foreground hover:text-foreground transition-colors"
+              className="text-gray-600 hover:text-foreground transition-colors"
             >
               Contact Us
             </Link>
@@ -82,7 +82,7 @@ const MainFooter = () => {
                 href="https://github.com/jevvonn/sea-catering-fe"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-gray-600 hover:text-foreground transition-colors"
                 aria-label="Follow us on GitHub"
               >
                 <GithubIcon className="w-5 h-5" />
@@ -91,7 +91,7 @@ const MainFooter = () => {
                 href="https://instagram.com/j_vmcb"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-gray-600 hover:text-foreground transition-colors"
                 aria-label="Follow us on Instagram"
               >
                 <InstagramIcon className="w-5 h-5" />

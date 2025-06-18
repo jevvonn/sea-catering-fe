@@ -16,7 +16,7 @@ const ContactSection = () => {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
               Get in Touch
             </h2>
-            <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+            <p className="mx-auto max-w-[700px] text-muted-foreground leading-relaxed">
               Ready to get started? Contact our team and we&apos;ll help you
               find the perfect meal plans.
             </p>
@@ -24,7 +24,7 @@ const ContactSection = () => {
         </div>
 
         <div className="mx-auto max-w-2xl mt-12">
-          <Card className="border-0">
+          <Card className="shadow-none">
             <CardHeader className="text-center pb-6">
               <CardTitle className="text-2xl">Contact Information</CardTitle>
               <CardDescription>
