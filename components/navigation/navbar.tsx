@@ -16,11 +16,11 @@ const Navbar = () => {
     },
     {
       title: "Menu",
-      href: "/",
+      href: "/menu",
     },
     {
       title: "Plans",
-      href: "/",
+      href: "/plans",
     },
     {
       title: "Contact Us",
