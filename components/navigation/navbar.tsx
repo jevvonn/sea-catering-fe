@@ -79,7 +79,7 @@ const Navbar = () => {
           </ul>
 
           <SheetFooter className="w-full flex flex-col gap-2 px-0">
-            <Link href={`/login`}>
+            <Link href={`/sign-in`}>
               <Button className="w-full" size={`lg`} variant="outline">
                 Sign In
               </Button>
