@@ -44,7 +44,7 @@ const MainFooter = () => {
               Home
             </Link>
             <Link
-              href="/menu"
+              href="/menus"
               className="text-gray-600 hover:text-foreground transition-colors"
             >
               Menu
