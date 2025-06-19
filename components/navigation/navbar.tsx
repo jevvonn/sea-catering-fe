@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { Sheet, SheetContent, SheetFooter } from "@/components/ui/sheet";
 import { useState } from "react";
-import { MenuIcon } from "lucide-react";
+import { HamburgerIcon } from "lucide-react";
 import Logo from "../assets/logo";
 import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
@@ -19,7 +19,7 @@ const Navbar = () => {
     },
     {
       title: "Menu",
-      href: "/menu",
+      href: "/menus",
     },
     {
       title: "Plans",
@@ -42,7 +42,7 @@ const Navbar = () => {
           size={`icon`}
           onClick={() => setSidebarOpen((prev) => !prev)}
         >
-          <MenuIcon />
+          <HamburgerIcon />
         </Button>
         <ul className="items-center gap-6 hidden md:flex flex-1 justify-center">
           {navigationLinks.map((link, idx) => (
