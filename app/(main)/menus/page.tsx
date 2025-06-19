@@ -79,14 +79,14 @@ const MenusPage = () => {
                     variant="secondary"
                     className={cn({
                       "bg-green-100 text-green-800": type === "Diet",
-                      "bg-blue-100 text-blue-800": type === "Protein",
+                      "bg-orange-100 text-orange-800": type === "Protein",
                       "bg-purple-100 text-purple-800": type === "Royal",
                     })}
                   >
                     {type === "Diet" ? <LeafIcon /> : null}
                     {type === "Protein" ? <ZapIcon /> : null}
                     {type === "Royal" ? <CrownIcon /> : null}
-                    {type}
+                    {type} Plan
                   </Badge>
                 ))}
               </div>
@@ -116,9 +116,11 @@ const MenusPage = () => {
                       : "Allergen Restricted"}
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>
-                  <p>{item.allergenInfo}</p>
-                </TooltipContent>
+                {!item.allergenFree ? (
+                  <TooltipContent>
+                    <p>{item.allergenInfo}</p>
+                  </TooltipContent>
+                ) : null}
               </Tooltip>
 
               <div>
