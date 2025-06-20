@@ -30,7 +30,7 @@ const MainFooter = () => {
         className="absolute -top-36 -z-0 right-40"
       />
 
-      <div className="mx-auto py-8">
+      <div className="mx-auto py-8 z-10 relative">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           <div className="flex items-center gap-3">
             <Logo />
