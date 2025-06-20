@@ -1,29 +1,9 @@
-import { Badge } from "@/components/ui/badge";
+import MenuCard from "@/components/menus/menu-card";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import { MENU_ITEMS } from "@/lib/menu-data";
-import { cn } from "@/lib/utils";
-import {
-  CheckIcon,
-  CloudSunIcon,
-  CrossIcon,
-  CrownIcon,
-  CupSodaIcon,
-  FilterIcon,
-  LeafIcon,
-  MoonStarIcon,
-  SearchIcon,
-  SunMediumIcon,
-  ZapIcon,
-} from "lucide-react";
-import Image from "next/image";
+import { FilterIcon, SearchIcon } from "lucide-react";
 import React from "react";
 
 const MenusPage = () => {
@@ -59,81 +39,7 @@ const MenusPage = () => {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 py-6 md:py-8">
         {MENU_ITEMS.map((item, idx) => (
-          <Card key={idx} className="p-4 rounded-md gap-1 shadow-none">
-            <CardHeader className="p-0 m-0">
-              <Image
-                src={item.image}
-                alt="Menu Placeholder"
-                width={600}
-                height={400}
-                className="w-full h-auto object-cover rounded-md"
-              />
-            </CardHeader>
-            <CardContent className="p-0 space-y-3">
-              <h3 className="text-lg font-semibold">{item.name}</h3>
-
-              <div className="flex items-center gap-2">
-                {item.plans.map((type) => (
-                  <Badge
-                    key={type}
-                    variant="secondary"
-                    className={cn({
-                      "bg-green-100 text-green-800": type === "Diet",
-                      "bg-orange-100 text-orange-800": type === "Protein",
-                      "bg-purple-100 text-purple-800": type === "Royal",
-                    })}
-                  >
-                    {type === "Diet" ? <LeafIcon /> : null}
-                    {type === "Protein" ? <ZapIcon /> : null}
-                    {type === "Royal" ? <CrownIcon /> : null}
-                    {type} Plan
-                  </Badge>
-                ))}
-              </div>
-
-              <div className="flex items-center gap-2">
-                {item.mealTypes.map((type) => (
-                  <Badge key={type} variant="secondary">
-                    {type === "Breakfast" ? <SunMediumIcon /> : null}
-                    {type === "Lunch" ? <CloudSunIcon /> : null}
-                    {type === "Dinner" ? <MoonStarIcon /> : null}
-                    {type}
-                  </Badge>
-                ))}
-              </div>
-
-              <Tooltip>
-                <TooltipTrigger>
-                  <Badge
-                    className={cn({
-                      "bg-green-100 text-green-800": item.allergenFree,
-                      "bg-red-100 text-red-800": !item.allergenFree,
-                    })}
-                  >
-                    {item.allergenFree ? <CheckIcon /> : <CrossIcon />}
-                    {item.allergenFree
-                      ? "Allergen Free"
-                      : "Allergen Restricted"}
-                  </Badge>
-                </TooltipTrigger>
-                {!item.allergenFree ? (
-                  <TooltipContent>
-                    <p>{item.allergenInfo}</p>
-                  </TooltipContent>
-                ) : null}
-              </Tooltip>
-
-              <div>
-                <p className="text-sm text-muted-foreground line-clamp-2">
-                  {item.description}
-                </p>
-              </div>
-
-              <Button variant={`outline`} className="">
-                <CupSodaIcon /> See More Details
-              </Button>
-            </CardContent>
-          </Card>
+          <MenuCard menu={item} key={idx} />
         ))}
       </div>
     </main>

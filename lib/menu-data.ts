@@ -1,22 +1,4 @@
-type NutritionalInfo = {
-  calories: number;
-  protein: number;
-  fat: number;
-  carbs: number;
-  fiber: number;
-  sugar: number;
-};
-
-type MenuItem = {
-  name: string;
-  description: string;
-  plans: ("Diet" | "Protein" | "Royal")[];
-  mealTypes: ("Breakfast" | "Lunch" | "Dinner")[];
-  nutrition: NutritionalInfo;
-  allergenFree: boolean;
-  allergenInfo: string;
-  image: string;
-};
+import { MenuItem } from "@/types/menu";
 
 export const MENU_ITEMS: MenuItem[] = [
   {
