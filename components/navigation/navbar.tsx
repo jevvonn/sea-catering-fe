@@ -18,22 +18,26 @@ const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const navigationLinks: { title: string; href: string }[] = [
+  const navigationLinks: { title: string; href: string; active: string[] }[] = [
     {
       title: "Home",
       href: "/",
+      active: ["/"],
     },
     {
       title: "Menu",
       href: "/menus",
+      active: ["/menus"],
     },
     {
       title: "Plans",
       href: "/plans",
+      active: ["/plans", "/subcribe"],
     },
     {
       title: "Contact Us",
       href: "/contact",
+      active: ["/contact"],
     },
   ];
 
@@ -59,7 +63,7 @@ const Navbar = () => {
                   `hover:bg-slate-100 transition-all hover:text-foreground rounded-sm p-4 py-2`,
                   {
                     "bg-primary text-primary-foreground":
-                      link.href === pathname,
+                      link.active.includes(pathname),
                   }
                 )}
               >
@@ -89,7 +93,7 @@ const Navbar = () => {
                   `md:hover:translate-x-4 transition-all w-full text-base border text-center py-2 rounded-md`,
                   {
                     "bg-primary text-primary-foreground":
-                      link.href === pathname,
+                      link.active.includes(pathname),
                   }
                 )}
                 onClick={() => {
