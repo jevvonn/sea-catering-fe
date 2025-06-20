@@ -20,12 +20,12 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-const MEAL_PLANS = [
+export const MEAL_PLANS = [
   {
     id: "diet",
     name: "Diet Plan",
     price: 30000,
-    icon: <LeafIcon className="w-8 h-8" />,
+    icon: LeafIcon,
     color: "bg-green-500",
     borderColor: "border-green-500",
     description: "Perfect for healthy weight management",
@@ -43,7 +43,7 @@ const MEAL_PLANS = [
     id: "protein",
     name: "Protein Plan",
     price: 40000,
-    icon: <ZapIcon className="w-8 h-8" />,
+    icon: ZapIcon,
     color: "bg-orange-500",
     borderColor: "border-orange-500",
     description: "Ideal for muscle building & active lifestyle",
@@ -61,7 +61,7 @@ const MEAL_PLANS = [
     id: "royal",
     name: "Royal Plan",
     price: 60000,
-    icon: <CrownIcon className="w-8 h-8" />,
+    icon: CrownIcon,
     color: "bg-purple-500",
     borderColor: "border-purple-500",
     description: "Premium experience",
@@ -112,7 +112,7 @@ const MealPlansPage = () => {
                 <div
                   className={`${plan.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white`}
                 >
-                  {plan.icon}
+                  <plan.icon className="w-8 h-8" />
                 </div>
                 <CardTitle className="text-2xl font-bold">
                   {plan.name}
@@ -146,7 +146,7 @@ const MealPlansPage = () => {
                         <div
                           className={`${plan.color} p-1 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white`}
                         >
-                          {plan.icon}
+                          <plan.icon className="w-8 h-8" />
                         </div>
                         {plan.name}
                       </DialogTitle>
@@ -192,12 +192,14 @@ const MealPlansPage = () => {
                           <ArrowUpRightIcon />
                         </Button>
                       </Link>
-                      <Button
-                        size="lg"
-                        className={`flex-1 ${plan.color} hover:${plan.color} hover:opacity-90 text-white`}
-                      >
-                        Subscribe to {plan.name}
-                      </Button>
+                      <Link href={`/subscribe`} className="flex-1">
+                        <Button
+                          size="lg"
+                          className={`${plan.color} hover:${plan.color} hover:opacity-90 text-white`}
+                        >
+                          Subscribe to {plan.name}
+                        </Button>
+                      </Link>
                     </div>
                   </DialogContent>
                 </Dialog>
