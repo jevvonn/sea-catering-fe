@@ -9,6 +9,7 @@ import {
   SaladIcon,
 } from "lucide-react";
 import { Button } from "../ui/button";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -54,10 +55,12 @@ const HeroSection = () => {
           and delivered fresh to every corner of Indonesia.
         </p>
 
-        <Button className="md:px-4 py-6 lg:mt-14" variant="outline">
-          <span className="md:text-lg">See Our Menu</span>
-          <ArrowUpRightIcon />
-        </Button>
+        <Link href="/menus">
+          <Button className="md:px-4 py-6 lg:mt-14" variant="outline">
+            <span className="md:text-lg">See Our Menu</span>
+            <ArrowUpRightIcon />
+          </Button>
+        </Link>
       </div>
     </section>
   );

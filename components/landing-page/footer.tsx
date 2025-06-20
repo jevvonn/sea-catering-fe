@@ -11,7 +11,7 @@ import Image from "next/image";
 
 const MainFooter = () => {
   return (
-    <footer className="bg-background border-t relative overflow-hidden">
+    <footer className="bg-background border-t relative overflow-hidden px-4 md:px-10">
       <Image
         src="/utils/circle.svg"
         alt="Circle Decoration"
@@ -30,7 +30,7 @@ const MainFooter = () => {
         className="absolute -top-36 -z-0 right-40"
       />
 
-      <div className="container mx-auto px-6 py-8">
+      <div className="mx-auto py-8 z-10 relative">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           <div className="flex items-center gap-3">
             <Logo />
@@ -44,7 +44,7 @@ const MainFooter = () => {
               Home
             </Link>
             <Link
-              href="/menu"
+              href="/menus"
               className="text-gray-600 hover:text-foreground transition-colors"
             >
               Menu
