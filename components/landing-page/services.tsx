@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import { ArrowUpRightIcon } from "lucide-react";
+import Link from "next/link";
 
 const ServicesSection = () => {
   return (
@@ -52,10 +53,12 @@ const ServicesSection = () => {
           </div>
 
           <div className="mt-4">
-            <Button className="px-6 py-6" variant="outline">
-              <span>Plans Your Meals</span>
-              <ArrowUpRightIcon />
-            </Button>
+            <Link href={`/subscribe`}>
+              <Button className="px-6 py-6" variant="outline">
+                <span>Plans Your Meals</span>
+                <ArrowUpRightIcon />
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="w-full flex justify-center">
@@ -96,10 +99,12 @@ const ServicesSection = () => {
           </div>
 
           <div className="flex justify-end mt-4">
-            <Button className="p-6" variant="outline">
-              <span>Order Your Meals</span>
-              <ArrowUpRightIcon />
-            </Button>
+            <Link href={`/plans`}>
+              <Button className="p-6" variant="outline">
+                <span>Order Your Meals</span>
+                <ArrowUpRightIcon />
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
@@ -120,10 +125,12 @@ const ServicesSection = () => {
           </div>
 
           <div className="mt-4">
-            <Button className="px-6 py-6" variant="outline">
-              <span>See Our Menu</span>
-              <ArrowUpRightIcon />
-            </Button>
+            <Link href={`/menus`}>
+              <Button className="px-6 py-6" variant="outline">
+                <span>See Our Menu</span>
+                <ArrowUpRightIcon />
+              </Button>
+            </Link>
           </div>
         </div>
         <div className="w-full flex justify-center">
