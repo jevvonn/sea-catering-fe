@@ -13,9 +13,9 @@ import { cn } from "@/lib/utils";
 import {
   CheckIcon,
   CloudSunIcon,
-  CookingPotIcon,
   CrossIcon,
   CrownIcon,
+  CupSodaIcon,
   FilterIcon,
   LeafIcon,
   MoonStarIcon,
@@ -130,7 +130,7 @@ const MenusPage = () => {
               </div>
 
               <Button variant={`outline`} className="">
-                <CookingPotIcon /> See More Details
+                <CupSodaIcon /> See More Details
               </Button>
             </CardContent>
           </Card>
