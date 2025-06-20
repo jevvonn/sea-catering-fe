@@ -2,16 +2,22 @@
 
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { Sheet, SheetContent, SheetFooter } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetFooter,
+  SheetTitle,
+} from "@/components/ui/sheet";
 import { useState } from "react";
 import { HamburgerIcon } from "lucide-react";
 import Logo from "../assets/logo";
 import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
+  const router = useRouter();
   const navigationLinks: { title: string; href: string }[] = [
     {
       title: "Home",
@@ -71,18 +77,27 @@ const Navbar = () => {
       </nav>
 
       <Sheet open={sidebarOpen} onOpenChange={setSidebarOpen}>
+        <SheetTitle className="sr-only">Navigation Sidebar</SheetTitle>
         <SheetContent className="p-4 w-full sm:w-[400px]">
           <Logo />
 
           <ul className="mt-4 space-y-4 w-full">
             {navigationLinks.map((link, idx) => (
-              <li key={idx} className="hover:translate-x-4 transition-all">
-                <Link
-                  href={link.href}
-                  className="w-full text-xl transition-all rounded-md"
-                >
-                  {link.title}
-                </Link>
+              <li
+                key={idx}
+                className={cn(
+                  `md:hover:translate-x-4 transition-all w-full text-base border text-center py-2 rounded-md`,
+                  {
+                    "bg-primary text-primary-foreground":
+                      link.href === pathname,
+                  }
+                )}
+                onClick={() => {
+                  router.push(link.href);
+                  setSidebarOpen(false);
+                }}
+              >
+                {link.title}
               </li>
             ))}
           </ul>
