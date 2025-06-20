@@ -43,8 +43,8 @@ const MEAL_PLANS = [
     name: "Protein Plan",
     price: 40000,
     icon: <ZapIcon className="w-8 h-8" />,
-    color: "bg-primary",
-    borderColor: "border-primary",
+    color: "bg-orange-50",
+    borderColor: "border-orange-500",
     description: "Ideal for muscle building & active lifestyle",
     tagline: "Power & Performance",
     features: [
