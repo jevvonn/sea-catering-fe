@@ -18,6 +18,7 @@ import {
   ZapIcon,
   CrownIcon,
 } from "lucide-react";
+import Link from "next/link";
 
 const MEAL_PLANS = [
   {
@@ -43,7 +44,7 @@ const MEAL_PLANS = [
     name: "Protein Plan",
     price: 40000,
     icon: <ZapIcon className="w-8 h-8" />,
-    color: "bg-orange-50",
+    color: "bg-orange-500",
     borderColor: "border-orange-500",
     description: "Ideal for muscle building & active lifestyle",
     tagline: "Power & Performance",
@@ -185,10 +186,12 @@ const MealPlansPage = () => {
                     </div>
 
                     <div className="flex flex-wrap gap-3">
-                      <Button size="lg" variant="outline" className="flex-1">
-                        <span>See Our Menus</span>
-                        <ArrowUpRightIcon />
-                      </Button>
+                      <Link href={`/menus`} className="flex-1">
+                        <Button size="lg" variant="outline" className="w-full">
+                          <span>See Our Menus</span>
+                          <ArrowUpRightIcon />
+                        </Button>
+                      </Link>
                       <Button
                         size="lg"
                         className={`flex-1 ${plan.color} hover:${plan.color} hover:opacity-90 text-white`}
