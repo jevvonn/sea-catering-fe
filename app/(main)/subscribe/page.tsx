@@ -13,9 +13,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useForm } from "react-hook-form";
-import { MEAL_PLANS } from "../plans/page";
 import { useState } from "react";
 import { CloudSunIcon, MoonStarIcon, SunMediumIcon } from "lucide-react";
+import { PLANS_ITEM } from "@/lib/plans-data";
 
 const DAYS = [
   "Monday",
@@ -89,7 +89,7 @@ const SubscribePlan = () => {
                 <FormLabel>Meal Plan</FormLabel>
                 <FormControl>
                   <div className="flex flex-col gap-2">
-                    {MEAL_PLANS.map((plan) => (
+                    {PLANS_ITEM.map((plan) => (
                       <Label
                         key={plan.id}
                         className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50"

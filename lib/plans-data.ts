@@ -1,0 +1,57 @@
+import { CrownIcon, LeafIcon, ZapIcon } from "lucide-react";
+
+export const PLANS_ITEM = [
+  {
+    id: "diet",
+    name: "Diet Plan",
+    price: 30000,
+    icon: LeafIcon,
+    color: "bg-green-500",
+    borderColor: "border-green-500",
+    description: "Perfect for healthy weight management",
+    tagline: "Light & Nutritious",
+    features: [
+      "300-400 calories per meal",
+      "High fiber content",
+      "Low fat recipes",
+      "Portion controlled",
+      "Fresh vegetables daily",
+    ],
+    popular: false,
+  },
+  {
+    id: "protein",
+    name: "Protein Plan",
+    price: 40000,
+    icon: ZapIcon,
+    color: "bg-orange-500",
+    borderColor: "border-orange-500",
+    description: "Ideal for muscle building & active lifestyle",
+    tagline: "Power & Performance",
+    features: [
+      "25-35g protein per meal",
+      "Lean meat & fish",
+      "Post-workout friendly",
+      "Balanced macronutrients",
+      "Athletic performance focused",
+    ],
+    popular: true,
+  },
+  {
+    id: "royal",
+    name: "Royal Plan",
+    price: 60000,
+    icon: CrownIcon,
+    color: "bg-purple-500",
+    borderColor: "border-purple-500",
+    description: "Premium experience",
+    tagline: "Luxury & Elegance",
+    features: [
+      "Premium ingredients",
+      "Chef-crafted recipes",
+      "Restaurant quality",
+      "Exclusive menu items",
+    ],
+    popular: false,
+  },
+];
