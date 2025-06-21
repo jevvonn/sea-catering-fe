@@ -12,10 +12,26 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useForm } from "react-hook-form";
-import { useState } from "react";
-import { CloudSunIcon, MoonStarIcon, SunMediumIcon } from "lucide-react";
+import { useForm, useWatch } from "react-hook-form";
+import { useEffect, useState } from "react";
+import {
+  CloudSunIcon,
+  InfoIcon,
+  MoonStarIcon,
+  SunMediumIcon,
+} from "lucide-react";
 import { PLANS_ITEM } from "@/lib/plans-data";
+import { z } from "zod";
+import { PlanItem } from "@/types/plan";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Button } from "@/components/ui/button";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { TagsInput } from "@/components/ui/tags-input";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const DAYS = [
   "Monday",
@@ -27,11 +43,67 @@ const DAYS = [
   "Sunday",
 ];
 
+const formSchema = z.object({
+  fullName: z.string().min(3, {
+    message: "Username must be at least 3 characters.",
+  }),
+  phoneNumber: z
+    .string()
+    .min(1, { message: "Phone number must be at least 1 number." })
+    .max(15, { message: "Phone number must not exceed 15 number." }),
+  mealPlan: z.enum(["diet", "protein", "royal"]),
+  mealType: z.array(z.string()).min(1, {
+    message: "Please select at least one meal type.",
+  }),
+  deliveryDays: z.array(z.string()).min(1, {
+    message: "Please select at least one day.",
+  }),
+  allergies: z.array(z.string()).min(0),
+});
+
 const SubscribePlan = () => {
-  const form = useForm();
-  const [selectedMealPlan, setSelectedMealPlan] = useState<
-    "diet" | "protein" | "royal"
-  >("diet");
+  const [selectedMealPlan, setSelectedMealPlan] =
+    useState<PlanItem["id"]>("diet");
+
+  const [totalPrice, setTotalPrice] = useState(0);
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      fullName: "",
+      phoneNumber: "",
+      mealPlan: selectedMealPlan,
+      mealType: [],
+      deliveryDays: [],
+      allergies: [],
+    },
+  });
+
+  const mealType = useWatch({ control: form.control, name: "mealType" });
+  const deliveryDays = useWatch({
+    control: form.control,
+    name: "deliveryDays",
+  });
+
+  useEffect(() => {
+    form.setValue("mealPlan", selectedMealPlan);
+  }, [selectedMealPlan, form]);
+
+  useEffect(() => {
+    const planPrice =
+      PLANS_ITEM.find((plan) => plan.id === selectedMealPlan)?.price || 0;
+
+    const mealTypeCount = form.watch("mealType").length;
+    const deliveryDaysCount = form.watch("deliveryDays").length;
+
+    const taxRate = 4.3; // 4.3%
+    const total = planPrice * mealTypeCount * deliveryDaysCount * taxRate;
+
+    setTotalPrice(total);
+  }, [selectedMealPlan, form, mealType, deliveryDays]);
+
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+  }
 
   return (
     <main className="pt-5 md:pt-10 px-4 md:px-10 relative">
@@ -41,168 +113,314 @@ const SubscribePlan = () => {
         </h2>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4 py-12">
+      <div className="max-w-2xl mx-auto px-4 py-6 md:py-12">
         <Form {...form}>
-          <div className="flex gap-4 md:gap-2 flex-col md:flex-row items-center">
-            <FormField
-              name="fullName"
-              render={() => (
-                <FormItem className="flex-1">
-                  <FormLabel>Full Name</FormLabel>
-                  <FormControl className="w-full">
-                    <div className="relative">
-                      <Input placeholder="Jevon Mozart" />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+            <div className="flex gap-4 md:gap-2 flex-col w-full md:flex-row items-center">
+              <FormField
+                name="fullName"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="flex-1 w-full md:w-auto">
+                    <FormLabel>Full Name</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <Input placeholder="Jevon Mozart" {...field} />
+                      </div>
+                    </FormControl>
+                    <FormMessage className="text-sm" />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              name="phoneNumber"
-              render={() => (
-                <FormItem className="flex-1">
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <div className="relative">
-                      <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm ">
-                        +62
-                      </span>
-                      <Input
-                        placeholder="812-3456-7890"
-                        type="tel"
-                        className="pl-10"
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <FormField
-            name="mealPlan"
-            render={() => (
-              <FormItem className="mt-4">
-                <FormLabel>Meal Plan</FormLabel>
-                <FormControl>
-                  <div className="flex flex-col gap-2">
-                    {PLANS_ITEM.map((plan) => (
-                      <Label
-                        key={plan.id}
-                        className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50"
-                      >
-                        <Checkbox
-                          className="hidden"
-                          checked={selectedMealPlan === plan.id}
-                          onCheckedChange={() =>
-                            setSelectedMealPlan(
-                              plan.id as "diet" | "protein" | "royal"
-                            )
-                          }
+              <FormField
+                name="phoneNumber"
+                control={form.control}
+                render={({ field }) => (
+                  <FormItem className="flex-1 w-full md:w-auto">
+                    <FormLabel>Phone Number</FormLabel>
+                    <FormControl>
+                      <div className="relative">
+                        <span className="absolute left-2 top-1/2 transform -translate-y-1/2 text-sm ">
+                          +62
+                        </span>
+                        <Input
+                          placeholder="81234567890"
+                          type="tel"
+                          className="pl-10"
+                          {...field}
                         />
-                        <div className="flex justify-between w-full">
-                          <div className="grid gap-3">
-                            <div className="flex items-center gap-1.5">
-                              <plan.icon className="w-4 h-4" />
-                              <p className="text-sm leading-none font-medium">
-                                {plan.name}
+                      </div>
+                    </FormControl>
+                    <FormMessage className="text-sm" />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <FormField
+              name="mealPlan"
+              render={() => (
+                <FormItem>
+                  <FormLabel>Meal Plan</FormLabel>
+                  <FormControl>
+                    <div className="flex flex-col gap-2">
+                      {PLANS_ITEM.map((plan) => (
+                        <Label
+                          key={plan.id}
+                          className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50"
+                        >
+                          <Checkbox
+                            className="hidden"
+                            checked={selectedMealPlan === plan.id}
+                            onCheckedChange={() => setSelectedMealPlan(plan.id)}
+                          />
+                          <div className="flex justify-between w-full">
+                            <div className="grid gap-3">
+                              <div className="flex items-center gap-1.5">
+                                <plan.icon className="w-4 h-4" />
+                                <p className="text-sm leading-none font-medium">
+                                  {plan.name}
+                                </p>
+                              </div>
+                              <p className="text-muted-foreground text-xs">
+                                {plan.description}
                               </p>
                             </div>
-                            <p className="text-muted-foreground text-xs">
-                              {plan.description}
-                            </p>
+                            <div>
+                              <p>
+                                {new Intl.NumberFormat("id-ID", {
+                                  style: "currency",
+                                  currency: "IDR",
+                                  minimumFractionDigits: 0,
+                                  maximumFractionDigits: 0,
+                                }).format(plan.price)}
+                              </p>
+                              <p className="text-xs text-right text-muted-foreground">
+                                per meal
+                              </p>
+                            </div>
                           </div>
-                          <div>
-                            <p>Rp{plan.price.toLocaleString()}</p>
-                            <p className="text-xs text-right text-muted-foreground">
-                              per meal
-                            </p>
-                          </div>
-                        </div>
-                      </Label>
-                    ))}
-                  </div>
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+                        </Label>
+                      ))}
+                    </div>
+                  </FormControl>
+                  <FormDescription />
+                  <FormMessage className="text-sm" />
+                </FormItem>
+              )}
+            />
 
-          <FormField
-            name="mealType"
-            render={() => (
-              <FormItem className="mt-4">
-                <FormLabel>Meal Type</FormLabel>
-                <FormControl>
-                  <div className="flex gap-2 flex-wrap">
-                    <Label className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50">
-                      <Checkbox className="hidden data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white" />
-                      <div className="flex items-center gap-1.5 font-normal">
-                        <SunMediumIcon className="size-4" />
-                        <p className="text-sm leading-none font-medium">
-                          Breakfast
-                        </p>
-                      </div>
-                    </Label>
-
-                    <Label className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50">
-                      <Checkbox className="hidden data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white" />
-                      <div className="flex items-center gap-1.5 font-normal">
-                        <CloudSunIcon className="size-4" />
-                        <p className="text-sm leading-none font-medium">
-                          Lunch
-                        </p>
-                      </div>
-                    </Label>
-
-                    <Label className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50">
-                      <Checkbox className="hidden data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white" />
-                      <div className="flex items-center gap-1.5 font-normal">
-                        <MoonStarIcon className="size-4" />
-                        <p className="text-sm leading-none font-medium">
-                          Dinner
-                        </p>
-                      </div>
-                    </Label>
-                  </div>
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            name="days"
-            render={() => (
-              <FormItem className="mt-4">
-                <FormLabel>Days</FormLabel>
-                <FormControl>
-                  <div className="flex gap-2 flex-wrap">
-                    {DAYS.map((day) => (
-                      <Label
-                        key={day}
-                        className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50"
-                      >
-                        <Checkbox className="hidden data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white" />
+            <FormField
+              name="mealType"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Meal Type</FormLabel>
+                  <FormControl>
+                    <div className="flex gap-2 flex-wrap">
+                      <Label className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50">
+                        <Checkbox
+                          className="hidden data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white"
+                          checked={field.value.includes("Breakfast")}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              field.onChange([...field.value, "Breakfast"]);
+                            } else {
+                              field.onChange(
+                                field.value.filter((v) => v !== "Breakfast")
+                              );
+                            }
+                          }}
+                        />
                         <div className="flex items-center gap-1.5 font-normal">
+                          <SunMediumIcon className="size-4" />
                           <p className="text-sm leading-none font-medium">
-                            {day}
+                            Breakfast
                           </p>
                         </div>
                       </Label>
-                    ))}
-                  </div>
-                </FormControl>
-                <FormDescription />
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+
+                      <Label className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50">
+                        <Checkbox
+                          className="hidden data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white"
+                          checked={field.value.includes("Lunch")}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              field.onChange([...field.value, "Lunch"]);
+                            } else {
+                              field.onChange(
+                                field.value.filter((v) => v !== "Lunch")
+                              );
+                            }
+                          }}
+                        />
+                        <div className="flex items-center gap-1.5 font-normal">
+                          <CloudSunIcon className="size-4" />
+                          <p className="text-sm leading-none font-medium">
+                            Lunch
+                          </p>
+                        </div>
+                      </Label>
+
+                      <Label className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50">
+                        <Checkbox
+                          className="hidden data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white"
+                          checked={field.value.includes("Dinner")}
+                          onCheckedChange={(checked) => {
+                            if (checked) {
+                              field.onChange([...field.value, "Dinner"]);
+                            } else {
+                              field.onChange(
+                                field.value.filter((v) => v !== "Dinner")
+                              );
+                            }
+                          }}
+                        />
+                        <div className="flex items-center gap-1.5 font-normal">
+                          <MoonStarIcon className="size-4" />
+                          <p className="text-sm leading-none font-medium">
+                            Dinner
+                          </p>
+                        </div>
+                      </Label>
+                    </div>
+                  </FormControl>
+                  <FormDescription />
+                  <FormMessage className="text-sm" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              name="deliveryDays"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Days</FormLabel>
+                  <FormControl>
+                    <div className="flex gap-2 flex-wrap">
+                      {DAYS.map((day) => (
+                        <Label
+                          key={day}
+                          className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50"
+                        >
+                          <Checkbox
+                            className="hidden data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white"
+                            checked={field.value.includes(day)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                field.onChange([...field.value, day]);
+                              } else {
+                                field.onChange(
+                                  field.value.filter((v) => v !== day)
+                                );
+                              }
+                            }}
+                          />
+                          <div className="flex items-center gap-1.5 font-normal">
+                            <p className="text-sm leading-none font-medium">
+                              {day}
+                            </p>
+                          </div>
+                        </Label>
+                      ))}
+                    </div>
+                  </FormControl>
+                  <FormDescription />
+                  <FormMessage className="text-sm" />
+                </FormItem>
+              )}
+            />
+
+            <FormField
+              name="allergies"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Allergies</FormLabel>
+                  <FormControl>
+                    <TagsInput
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      className="px-2 rounded-md shadow-sm"
+                      placeholder="e.g. nuts, dairy"
+                    />
+                  </FormControl>
+                  <FormDescription />
+                  <FormMessage className="text-sm" />
+                </FormItem>
+              )}
+            />
+
+            <div>
+              <Label className="text-base">Price</Label>
+
+              <Table className="mt-2">
+                <TableBody>
+                  <TableRow>
+                    <TableCell>Meal Plan</TableCell>
+                    <TableCell className="text-right">
+                      {PLANS_ITEM.find(
+                        (plan) => plan.id === selectedMealPlan
+                      )?.price.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                        minimumFractionDigits: 0,
+                        maximumFractionDigits: 0,
+                      }) || "Rp0"}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Meal Types</TableCell>
+                    <TableCell className="text-right">
+                      {form.watch("mealType").length} types
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Delivery Days</TableCell>
+                    <TableCell className="text-right">
+                      {form.watch("deliveryDays").length} days
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell>Tax</TableCell>
+                    <TableCell className="text-right">4.3</TableCell>
+                  </TableRow>
+                </TableBody>
+              </Table>
+
+              <div className="flex justify-between mt-4">
+                <div className="flex items-center gap-2">
+                  <h2 className="text-xl md:text-2xl font-bold">Total Price</h2>
+
+                  <Popover>
+                    <PopoverTrigger>
+                      <InfoIcon className="text-blue-800" size={20} />
+                    </PopoverTrigger>
+                    <PopoverContent className="text-sm">
+                      (Plan Price) × (Number of Meal Types Selected) × (Number
+                      of Delivery Days Selected) × 4.3
+                    </PopoverContent>
+                  </Popover>
+                </div>
+                <p className="text-xl md:text-2xl font-bold">
+                  {new Intl.NumberFormat("id-ID", {
+                    style: "currency",
+                    currency: "IDR",
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0,
+                  }).format(totalPrice)}
+                </p>
+              </div>
+            </div>
+
+            <div>
+              <Button type="submit" className="w-full">
+                Subscribe Now
+              </Button>
+            </div>
+          </form>
         </Form>
       </div>
     </main>
