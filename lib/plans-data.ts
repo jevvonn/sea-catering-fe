@@ -1,6 +1,7 @@
+import { PlanItem } from "@/types/plan";
 import { CrownIcon, LeafIcon, ZapIcon } from "lucide-react";
 
-export const PLANS_ITEM = [
+export const PLANS_ITEM: PlanItem[] = [
   {
     id: "diet",
     name: "Diet Plan",
