@@ -36,8 +36,8 @@ const Navbar = () => {
     },
     {
       title: "Contact Us",
-      href: "/contact",
-      active: ["/contact"],
+      href: "/contact-us",
+      active: ["/contact-us"],
     },
   ];
 
