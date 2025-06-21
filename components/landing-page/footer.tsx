@@ -56,7 +56,7 @@ const MainFooter = () => {
               Plans
             </Link>
             <Link
-              href="/contact"
+              href="/contact-us"
               className="text-gray-600 hover:text-foreground transition-colors"
             >
               Contact Us

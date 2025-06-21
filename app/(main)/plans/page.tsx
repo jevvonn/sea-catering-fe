@@ -15,66 +15,9 @@ import {
   ChefHatIcon,
   ArrowUpRightIcon,
   LeafIcon,
-  ZapIcon,
-  CrownIcon,
 } from "lucide-react";
 import Link from "next/link";
-
-const MEAL_PLANS = [
-  {
-    id: "diet",
-    name: "Diet Plan",
-    price: 30000,
-    icon: <LeafIcon className="w-8 h-8" />,
-    color: "bg-green-500",
-    borderColor: "border-green-500",
-    description: "Perfect for healthy weight management",
-    tagline: "Light & Nutritious",
-    features: [
-      "300-400 calories per meal",
-      "High fiber content",
-      "Low fat recipes",
-      "Portion controlled",
-      "Fresh vegetables daily",
-    ],
-    popular: false,
-  },
-  {
-    id: "protein",
-    name: "Protein Plan",
-    price: 40000,
-    icon: <ZapIcon className="w-8 h-8" />,
-    color: "bg-orange-500",
-    borderColor: "border-orange-500",
-    description: "Ideal for muscle building & active lifestyle",
-    tagline: "Power & Performance",
-    features: [
-      "25-35g protein per meal",
-      "Lean meat & fish",
-      "Post-workout friendly",
-      "Balanced macronutrients",
-      "Athletic performance focused",
-    ],
-    popular: true,
-  },
-  {
-    id: "royal",
-    name: "Royal Plan",
-    price: 60000,
-    icon: <CrownIcon className="w-8 h-8" />,
-    color: "bg-purple-500",
-    borderColor: "border-purple-500",
-    description: "Premium experience",
-    tagline: "Luxury & Elegance",
-    features: [
-      "Premium ingredients",
-      "Chef-crafted recipes",
-      "Restaurant quality",
-      "Exclusive menu items",
-    ],
-    popular: false,
-  },
-];
+import { PLANS_ITEM } from "@/lib/plans-data";
 
 const MealPlansPage = () => {
   return (
@@ -92,7 +35,7 @@ const MealPlansPage = () => {
 
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {MEAL_PLANS.map((plan) => (
+          {PLANS_ITEM.map((plan) => (
             <Card
               key={plan.id}
               className={`relative shadow-none hover:shadow-xl transition-all duration-300 ${
@@ -112,7 +55,7 @@ const MealPlansPage = () => {
                 <div
                   className={`${plan.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 text-white`}
                 >
-                  {plan.icon}
+                  <plan.icon className="w-8 h-8" />
                 </div>
                 <CardTitle className="text-2xl font-bold">
                   {plan.name}
@@ -146,7 +89,7 @@ const MealPlansPage = () => {
                         <div
                           className={`${plan.color} p-1 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-white`}
                         >
-                          {plan.icon}
+                          <plan.icon className="w-8 h-8" />
                         </div>
                         {plan.name}
                       </DialogTitle>
@@ -192,12 +135,14 @@ const MealPlansPage = () => {
                           <ArrowUpRightIcon />
                         </Button>
                       </Link>
-                      <Button
-                        size="lg"
-                        className={`flex-1 ${plan.color} hover:${plan.color} hover:opacity-90 text-white`}
-                      >
-                        Subscribe to {plan.name}
-                      </Button>
+                      <Link href={`/subscribe`} className="flex-1">
+                        <Button
+                          size="lg"
+                          className={`${plan.color} w-full hover:${plan.color} hover:opacity-90 text-white`}
+                        >
+                          Subscribe to {plan.name}
+                        </Button>
+                      </Link>
                     </div>
                   </DialogContent>
                 </Dialog>

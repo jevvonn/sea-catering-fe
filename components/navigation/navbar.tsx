@@ -32,12 +32,12 @@ const Navbar = () => {
     {
       title: "Plans",
       href: "/plans",
-      active: ["/plans", "/subcribe"],
+      active: ["/plans", "/subscribe"],
     },
     {
       title: "Contact Us",
-      href: "/contact",
-      active: ["/contact"],
+      href: "/contact-us",
+      active: ["/contact-us"],
     },
   ];
 
