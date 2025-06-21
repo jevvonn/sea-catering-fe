@@ -138,7 +138,7 @@ const MealPlansPage = () => {
                       <Link href={`/subscribe`} className="flex-1">
                         <Button
                           size="lg"
-                          className={`${plan.color} hover:${plan.color} hover:opacity-90 text-white`}
+                          className={`${plan.color} w-full hover:${plan.color} hover:opacity-90 text-white`}
                         >
                           Subscribe to {plan.name}
                         </Button>
