@@ -13,7 +13,7 @@ const ContactUsPage = () => {
         </div>
       </div>
 
-      <div className="w-full flex flex-col items-center justify-center max-w-2xl mx-auto px-4 mt-4">
+      <div className="w-full flex flex-col items-center justify-center max-w-2xl mx-auto mt-4">
         <ContactUsForm />
         <ContactSection />
       </div>
