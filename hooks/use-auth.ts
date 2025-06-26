@@ -5,7 +5,11 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export const useSession = (): Session | null => {
+type Props = {
+  authenticated?: boolean;
+};
+
+export const useSession = (props?: Props): Session | null => {
   const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
 
@@ -31,12 +35,12 @@ export const useSession = (): Session | null => {
 
   useEffect(() => {
     const token = getCookie("token");
-    if (!token) {
+    if (!token && props?.authenticated) {
       router.push("/sign-in");
     }
 
     getSession();
-  }, [router, getSession]);
+  }, [router, getSession, props?.authenticated]);
 
   return session;
 };
