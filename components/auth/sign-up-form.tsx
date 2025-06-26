@@ -15,36 +15,15 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-
-const formSchema = z
-  .object({
-    name: z.string().min(3, {
-      message: "Fullname must be at least 3 characters.",
-    }),
-    email: z.string().email({
-      message: "Invalid email address.",
-    }),
-    password: z
-      .string()
-      .min(8, { message: "Password must be at least 8 characters." })
-      .regex(/[a-z]/, { message: "Password must include a lowercase letter." })
-      .regex(/[A-Z]/, { message: "Password must include an uppercase letter." })
-      .regex(/[0-9]/, { message: "Password must include a number." })
-      .regex(/[^A-Za-z0-9]/, {
-        message: "Password must include a special character.",
-      }),
-    confirmPassword: z.string().min(8, {
-      message: "Confirm Password must be at least 8 characters.",
-    }),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords do not match.",
-    path: ["confirmPassword"],
-  });
+import { toast } from "sonner";
+import { registerSchema } from "@/schema/auth";
+import { registerUser } from "@/services/auth";
+import { useState } from "react";
 
 const SignUpForm = ({ className, ...props }: React.ComponentProps<"form">) => {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const [isLoading, setIsLoading] = useState(false);
+  const form = useForm<z.infer<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
     defaultValues: {
       name: "",
       email: "",
@@ -53,8 +32,18 @@ const SignUpForm = ({ className, ...props }: React.ComponentProps<"form">) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(data: z.infer<typeof registerSchema>) {
+    setIsLoading(true);
+    const result = await registerUser(data);
+
+    if (!result.errors) {
+      toast.success("Registration successful! Please log in.");
+      form.reset();
+    } else {
+      toast.error(result.errors);
+    }
+
+    setIsLoading(false);
   }
 
   return (
@@ -151,7 +140,7 @@ const SignUpForm = ({ className, ...props }: React.ComponentProps<"form">) => {
               )}
             />
           </div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" disabled={isLoading} className="w-full">
             Login
           </Button>
         </div>
