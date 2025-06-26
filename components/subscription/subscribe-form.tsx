@@ -20,9 +20,8 @@ import {
   MoonStarIcon,
   SunMediumIcon,
 } from "lucide-react";
-import { PLANS_ITEM } from "@/lib/plans-data";
 import { z } from "zod";
-import { PlanItem } from "@/types/plan";
+import { Plan } from "@/types/plan";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
@@ -32,6 +31,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { getPlans } from "@/services/plans";
 
 const DAYS = [
   "Monday",
@@ -62,8 +62,8 @@ const formSchema = z.object({
 });
 
 const SubscribeForm = () => {
-  const [selectedMealPlan, setSelectedMealPlan] =
-    useState<PlanItem["id"]>("diet");
+  const [plans, setPlans] = useState<Plan[] | null>(null);
+  const [selectedMealPlan, setSelectedMealPlan] = useState<Plan["id"]>("diet");
 
   const [totalPrice, setTotalPrice] = useState(0);
   const form = useForm<z.infer<typeof formSchema>>({
@@ -84,13 +84,27 @@ const SubscribeForm = () => {
     name: "deliveryDays",
   });
 
+  const fetchPlans = async () => {
+    const response = await getPlans();
+
+    if (response.data) {
+      setPlans(response.data);
+    } else {
+      console.error("failed to fetch plans:", response.errors);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlans();
+  }, []);
+
   useEffect(() => {
     form.setValue("mealPlan", selectedMealPlan);
   }, [selectedMealPlan, form]);
 
   useEffect(() => {
     const planPrice =
-      PLANS_ITEM.find((plan) => plan.id === selectedMealPlan)?.price || 0;
+      plans?.find((plan) => plan.id === selectedMealPlan)?.price || 0;
 
     const mealTypeCount = form.watch("mealType").length;
     const deliveryDaysCount = form.watch("deliveryDays").length;
@@ -99,7 +113,7 @@ const SubscribeForm = () => {
     const total = planPrice * mealTypeCount * deliveryDaysCount * taxRate;
 
     setTotalPrice(total);
-  }, [selectedMealPlan, form, mealType, deliveryDays]);
+  }, [selectedMealPlan, form, mealType, deliveryDays, plans]);
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
@@ -157,7 +171,7 @@ const SubscribeForm = () => {
               <FormLabel>Meal Plan</FormLabel>
               <FormControl>
                 <div className="flex flex-col gap-2">
-                  {PLANS_ITEM.map((plan) => (
+                  {plans?.map((plan) => (
                     <Label
                       key={plan.id}
                       className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50"
@@ -170,13 +184,12 @@ const SubscribeForm = () => {
                       <div className="flex justify-between w-full">
                         <div className="grid gap-3">
                           <div className="flex items-center gap-1.5">
-                            <plan.icon className="w-4 h-4" />
                             <p className="text-sm leading-none font-medium">
                               {plan.name}
                             </p>
                           </div>
                           <p className="text-muted-foreground text-xs">
-                            {plan.description}
+                            {plan.slogan}
                           </p>
                         </div>
                         <div>
@@ -349,14 +362,14 @@ const SubscribeForm = () => {
               <TableRow>
                 <TableCell>Meal Plan</TableCell>
                 <TableCell className="text-right">
-                  {PLANS_ITEM.find(
-                    (plan) => plan.id === selectedMealPlan
-                  )?.price.toLocaleString("id-ID", {
-                    style: "currency",
-                    currency: "IDR",
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0,
-                  }) || "Rp0"}
+                  {plans
+                    ?.find((plan) => plan.id === selectedMealPlan)
+                    ?.price.toLocaleString("id-ID", {
+                      style: "currency",
+                      currency: "IDR",
+                      minimumFractionDigits: 0,
+                      maximumFractionDigits: 0,
+                    }) || "Rp0"}
                 </TableCell>
               </TableRow>
               <TableRow>
