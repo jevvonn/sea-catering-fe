@@ -2,6 +2,8 @@ import { api } from "@/lib/axios";
 import { loginSchema, registerSchema } from "@/schema/auth";
 import { z } from "zod";
 import { handleApiErorr } from "./api";
+import { User } from "@/types/user";
+import { getCookie } from "cookies-next";
 
 export const registerUser = async (
   data: z.infer<typeof registerSchema>
@@ -24,6 +26,21 @@ export const loginUser = async (
 ): Promise<ApiResponse<LoginApiResponse>> => {
   try {
     const response = await api.post("/auth/login", data);
+    return response.data;
+  } catch (error) {
+    return handleApiErorr(error);
+  }
+};
+
+export const getUserSession = async (): Promise<ApiResponse<User>> => {
+  const token = getCookie("token");
+
+  try {
+    const response = await api.get("/auth/session", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
     return response.data;
   } catch (error) {
     return handleApiErorr(error);

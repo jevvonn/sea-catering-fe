@@ -1,14 +1,22 @@
 import Logo from "@/components/assets/logo";
 import SignUpForm from "@/components/auth/sign-up-form";
+import { getSession } from "@/lib/auth/get-session";
 import { Metadata } from "next";
 import Image from "next/image";
+import { redirect } from "next/navigation";
 import React from "react";
 
 export const metadata: Metadata = {
   title: "Sign Up",
 };
 
-const SignUpPage = () => {
+const SignUpPage = async () => {
+  const session = await getSession();
+
+  if (session) {
+    return redirect("/");
+  }
+
   return (
     <div className="grid min-h-svh lg:grid-cols-2">
       <div className="bg-muted relative hidden lg:block">
