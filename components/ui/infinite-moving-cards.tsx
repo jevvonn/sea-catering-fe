@@ -13,7 +13,7 @@ export const InfiniteMovingCards = ({
   className,
 }: {
   items: {
-    quote: string;
+    message: string;
     name: string;
     rating: number;
   }[];
@@ -98,7 +98,7 @@ export const InfiniteMovingCards = ({
             spotlightColor="rgba(255, 105, 0, 0.2)"
           >
             <blockquote className="text-sm leading-[1.6] font-normal text-neutral-800 dark:text-gray-100">
-              {item.quote}
+              {item.message}
             </blockquote>
             <div className="mt-6 flex flex-row items-center">
               <span className="flex flex-col gap-1">
