@@ -1,6 +1,6 @@
 import { AxiosError } from "axios";
 
-export const handleApiErorr = (error: unknown): ApiResponse => {
+export const handleApiErorr = <T = unknown>(error: unknown): ApiResponse<T> => {
   if (error instanceof AxiosError) {
     const errorData = error.response?.data as ApiResponse;
 
