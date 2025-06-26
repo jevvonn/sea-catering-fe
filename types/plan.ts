@@ -10,3 +10,13 @@ export type PlanItem = {
   features: string[];
   popular: boolean;
 };
+
+export type Plan = {
+  id: string;
+  name: string;
+  price: number;
+  slogan: string;
+  features: string;
+  created_at: string;
+  updated_at: string;
+};
