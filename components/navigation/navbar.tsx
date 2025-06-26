@@ -98,9 +98,9 @@ const Navbar = () => {
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger className="flex items-center gap-4 p-2 px-3 border rounded-md cursor-pointer hover:bg-slate-100 transition-all">
-                <Avatar className="w-4 h-4">
-                  <AvatarFallback>
-                    {session.user?.name?.charAt(0) || "A"}
+                <Avatar className="h-8 w-8 rounded-lg">
+                  <AvatarFallback className="rounded-sm">
+                    {session.user?.name.charAt(0)}
                   </AvatarFallback>
                 </Avatar>
                 {session.user?.name.split(" ")[0] || "Account"}
