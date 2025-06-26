@@ -4,6 +4,7 @@ import { z } from "zod";
 import { handleApiErorr } from "./api";
 import { User } from "@/types/user";
 import { getCookie } from "cookies-next";
+import { LoginApiResponse } from "@/types/auth";
 
 export const registerUser = async (
   data: z.infer<typeof registerSchema>
@@ -14,11 +15,6 @@ export const registerUser = async (
   } catch (error) {
     return handleApiErorr(error);
   }
-};
-
-type LoginApiResponse = {
-  token: string;
-  userId: string;
 };
 
 export const loginUser = async (

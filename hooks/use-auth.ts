@@ -1,41 +1,42 @@
 import { getUserSession } from "@/services/auth";
-import { User } from "@/types/user";
-import { getCookie } from "cookies-next/client";
+import { Session } from "@/types/auth";
+import { deleteCookie, getCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
+import { toast } from "sonner";
 
-type Session = {
-  user: User | null;
-  isAuthenticated: boolean;
-};
-
-type Props = {
-  authenticated?: boolean;
-};
-
-export const useSession = (props?: Props): Session | null => {
+export const useSession = (): Session | null => {
   const router = useRouter();
   const [session, setSession] = useState<Session | null>(null);
 
-  const getSession = async () => {
+  const logout = () => {
+    deleteCookie("token");
+  };
+
+  const getSession = useCallback(async () => {
     const response = await getUserSession();
 
     if (response.data) {
       setSession({
         user: response.data,
         isAuthenticated: true,
+        logout: () => {
+          logout();
+          toast.success("You have been logged out successfully.");
+          router.push("/sign-in");
+        },
       });
     }
-  };
+  }, [router]);
 
   useEffect(() => {
     const token = getCookie("token");
-    if (!token && props?.authenticated) {
+    if (!token) {
       router.push("/sign-in");
     }
 
     getSession();
-  }, [router, props?.authenticated]);
+  }, [router, getSession]);
 
   return session;
 };

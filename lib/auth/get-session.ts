@@ -1,11 +1,8 @@
 import { User } from "@/types/user";
 import { cookies } from "next/headers";
 import { api } from "../axios";
-
-type Session = {
-  user: User | null;
-  isAuthenticated: boolean;
-};
+import { Session } from "@/types/auth";
+import { redirect } from "next/navigation";
 
 export const getSession = async (): Promise<Session | null> => {
   const token = (await cookies()).get("token")?.value;
@@ -23,6 +20,10 @@ export const getSession = async (): Promise<Session | null> => {
     return {
       user: response.data.data as User,
       isAuthenticated: true,
+      logout: async () => {
+        (await cookies()).delete("token");
+        redirect("/sign-in");
+      },
     };
   } catch (error) {
     console.error("error fetching session:", error);
