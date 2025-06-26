@@ -20,14 +20,12 @@ export const getSession = async (): Promise<Session | null> => {
       },
     });
 
-    console.log("Session response:", response.data);
-
     return {
       user: response.data.data as User,
       isAuthenticated: true,
     };
   } catch (error) {
-    console.error("Error fetching session:", error);
+    console.error("error fetching session:", error);
     return null;
   }
 };
