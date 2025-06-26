@@ -9,15 +9,13 @@ import {
   CheckIcon,
   CloudSunIcon,
   CrossIcon,
-  CrownIcon,
   FilterIcon,
-  LeafIcon,
   MoonStarIcon,
   SearchIcon,
+  SoupIcon,
   SunMediumIcon,
-  ZapIcon,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -25,11 +23,14 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Checkbox } from "@/components/ui/checkbox";
+import { getPlans } from "@/services/plans";
+import { Plan } from "@/types/plan";
 
 const MenusPage = () => {
   const [menus, setMenus] = useState(MENU_ITEMS);
   const [searchQuery, setSearchQuery] = useState("");
   const [openFilterDialog, setOpenFilterDialog] = useState(false);
+  const [plans, setPlans] = useState<Plan[] | null>(null);
   const [filter, setFilter] = useState<{
     mealPlans: ("Diet" | "Protein" | "Royal")[];
     mealTypes: ("Breakfast" | "Lunch" | "Dinner")[];
@@ -49,6 +50,20 @@ const MenusPage = () => {
 
     setMenus(filteredMenus);
   };
+
+  const fetchPlans = async () => {
+    const response = await getPlans();
+
+    if (response.data) {
+      setPlans(response.data);
+    } else {
+      console.error("failed to fetch plans:", response.errors);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlans();
+  }, []);
 
   const applyFilters = () => {
     const filteredMenus = MENU_ITEMS.filter((menu) => {
@@ -145,62 +160,46 @@ const MenusPage = () => {
               <span className="text-lg font-semibold">Meal Plans</span>
             </Label>
             <div className="flex gap-2 flex-wrap">
-              <Label className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50">
-                <Checkbox
-                  checked={filter.mealPlans.includes("Diet")}
-                  onCheckedChange={(checked) => {
-                    setFilter((prev) => ({
-                      ...prev,
-                      mealPlans: checked
-                        ? [...prev.mealPlans, "Diet"]
-                        : prev.mealPlans.filter((plan) => plan !== "Diet"),
-                    }));
-                  }}
-                  className="data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white"
-                />
-                <div className="flex items-center gap-1.5 font-normal">
-                  <LeafIcon className="size-4" />
-                  <p className="text-sm leading-none font-medium">Diet Plan</p>
-                </div>
-              </Label>
-              <Label className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-orange-600 has-[[aria-checked=true]]:bg-orange-50">
-                <Checkbox
-                  checked={filter.mealPlans.includes("Protein")}
-                  onCheckedChange={(checked) => {
-                    setFilter((prev) => ({
-                      ...prev,
-                      mealPlans: checked
-                        ? [...prev.mealPlans, "Protein"]
-                        : prev.mealPlans.filter((plan) => plan !== "Protein"),
-                    }));
-                  }}
-                  className="data-[state=checked]:border-orange-600 data-[state=checked]:bg-primary data-[state=checked]:text-white"
-                />
-                <div className="flex items-center gap-1.5 font-normal">
-                  <ZapIcon className="size-4" />
-                  <p className="text-sm leading-none font-medium">
-                    Protein Plan
-                  </p>
-                </div>
-              </Label>
-              <Label className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-purple-600 has-[[aria-checked=true]]:bg-purple-50">
-                <Checkbox
-                  checked={filter.mealPlans.includes("Royal")}
-                  onCheckedChange={(checked) => {
-                    setFilter((prev) => ({
-                      ...prev,
-                      mealPlans: checked
-                        ? [...prev.mealPlans, "Royal"]
-                        : prev.mealPlans.filter((plan) => plan !== "Royal"),
-                    }));
-                  }}
-                  className="data-[state=checked]:border-purple-600 data-[state=checked]:bg-purple-600 data-[state=checked]:text-white"
-                />
-                <div className="flex items-center gap-1.5 font-normal">
-                  <CrownIcon className="size-4" />
-                  <p className="text-sm leading-none font-medium">Royal Plan</p>
-                </div>
-              </Label>
+              {plans?.map((plan) => (
+                <Label
+                  key={plan.id}
+                  className="cursor-pointer hover:bg-accent/50 flex items-start gap-3 rounded-lg border p-2 has-[[aria-checked=true]]:border-green-600 has-[[aria-checked=true]]:bg-green-50"
+                >
+                  <Checkbox
+                    checked={filter.mealPlans.includes(
+                      plan.name.split(" ")[0] as "Diet" | "Protein" | "Royal"
+                    )}
+                    onCheckedChange={(checked) => {
+                      setFilter((prev) => ({
+                        ...prev,
+                        mealPlans: checked
+                          ? [
+                              ...prev.mealPlans,
+                              plan.name.split(" ")[0] as
+                                | "Diet"
+                                | "Protein"
+                                | "Royal",
+                            ]
+                          : prev.mealPlans.filter(
+                              (prev) =>
+                                prev !==
+                                (plan.name.split(" ")[0] as
+                                  | "Diet"
+                                  | "Protein"
+                                  | "Royal")
+                            ),
+                      }));
+                    }}
+                    className="data-[state=checked]:border-green-600 data-[state=checked]:bg-green-600 data-[state=checked]:text-white"
+                  />
+                  <div className="flex items-center gap-1.5 font-normal">
+                    <SoupIcon className="size-4" />
+                    <p className="text-sm leading-none font-medium">
+                      {plan.name}
+                    </p>
+                  </div>
+                </Label>
+              ))}
             </div>
           </div>
 

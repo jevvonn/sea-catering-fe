@@ -30,6 +30,12 @@ export const loginUser = async (
 
 export const getUserSession = async (): Promise<ApiResponse<User>> => {
   const token = getCookie("token");
+  if (!token) {
+    return {
+      message: "Unauthorized",
+      errors: "No token provided",
+    };
+  }
 
   try {
     const response = await api.get("/auth/session", {

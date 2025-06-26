@@ -1,12 +1,9 @@
-export type PlanItem = {
+export type Plan = {
   id: "diet" | "protein" | "royal";
   name: string;
   price: number;
-  icon: React.ComponentType<React.SVGProps<SVGSVGElement>>;
-  color: string;
-  borderColor: string;
-  description: string;
-  tagline: string;
-  features: string[];
-  popular: boolean;
+  slogan: string;
+  features: string;
+  created_at: string;
+  updated_at: string;
 };

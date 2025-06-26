@@ -1,7 +1,12 @@
 import { AxiosError } from "axios";
+import { deleteCookie } from "cookies-next/client";
 
 export const handleApiErorr = <T = unknown>(error: unknown): ApiResponse<T> => {
   if (error instanceof AxiosError) {
+    if (error.response?.status === 401) {
+      deleteCookie("token");
+    }
+
     const errorData = error.response?.data as ApiResponse;
 
     if (errorData.errors) {
