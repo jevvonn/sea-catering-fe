@@ -141,7 +141,7 @@ const SignUpForm = ({ className, ...props }: React.ComponentProps<"form">) => {
             />
           </div>
           <Button type="submit" disabled={isLoading} className="w-full">
-            Login
+            Sign Up
           </Button>
         </div>
         <div className="text-center text-sm">
