@@ -47,7 +47,10 @@ const DashboardPage = () => {
           </Link>
         </div>
         {subscriptions?.filter(
-          (sub) => sub.status === "ACTIVE" && !sub.is_paused
+          (sub) =>
+            (session ? sub.user_id === session!.user!.id : sub.user_id) &&
+            sub.status === "ACTIVE" &&
+            !sub.is_paused
         ).length === 0 && (
           <p className="text-muted-foreground">
             You have no active subscriptions at the moment.
@@ -55,7 +58,12 @@ const DashboardPage = () => {
         )}
         <div className="space-y-4">
           {subscriptions
-            ?.filter((sub) => sub.status === "ACTIVE" && !sub.is_paused)
+            ?.filter(
+              (sub) =>
+                (session ? sub.user_id === session!.user!.id : sub.user_id) &&
+                sub.status === "ACTIVE" &&
+                !sub.is_paused
+            )
             .map((subscription) => (
               <SubscriptionCard
                 refetch={fetchSubscriptions}
@@ -69,7 +77,10 @@ const DashboardPage = () => {
           Paused Subscriptions
         </h2>
         {subscriptions?.filter(
-          (sub) => sub.status === "ACTIVE" && sub.is_paused
+          (sub) =>
+            (session ? sub.user_id === session!.user!.id : sub.user_id) &&
+            sub.status === "ACTIVE" &&
+            sub.is_paused
         ).length === 0 && (
           <p className="text-muted-foreground">
             You have no paused subscriptions at the moment.
@@ -77,7 +88,12 @@ const DashboardPage = () => {
         )}
         <div className="space-y-4">
           {subscriptions
-            ?.filter((sub) => sub.status === "ACTIVE" && sub.is_paused)
+            ?.filter(
+              (sub) =>
+                (session ? sub.user_id === session!.user!.id : sub.user_id) &&
+                sub.status === "ACTIVE" &&
+                sub.is_paused
+            )
             .map((subscription) => (
               <SubscriptionCard
                 refetch={fetchSubscriptions}
@@ -90,15 +106,22 @@ const DashboardPage = () => {
         <h2 className="text-base sm:text-lg font-semibold">
           Canceled Subscriptions
         </h2>
-        {subscriptions?.filter((sub) => sub.status === "CANCELLED").length ===
-          0 && (
+        {subscriptions?.filter(
+          (sub) =>
+            (session ? sub.user_id === session!.user!.id : sub.user_id) &&
+            sub.status === "CANCELLED"
+        ).length === 0 && (
           <p className="text-muted-foreground">
             You have no canceled subscriptions at the moment.
           </p>
         )}
         <div className="space-y-4">
           {subscriptions
-            ?.filter((sub) => sub.status === "CANCELLED")
+            ?.filter(
+              (sub) =>
+                (session ? sub.user_id === session!.user!.id : sub.user_id) &&
+                sub.status === "CANCELLED"
+            )
             .map((subscription) => (
               <SubscriptionCard
                 refetch={fetchSubscriptions}
