@@ -124,9 +124,11 @@ const Navbar = () => {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="py-2 cursor-pointer">
-                  <HomeIcon />
-                  Dashboard
+                <DropdownMenuItem asChild className="py-2 cursor-pointer">
+                  <Link href={`/dashboard`}>
+                    <HomeIcon />
+                    Dashboard
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -222,9 +224,11 @@ const Navbar = () => {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="py-2 cursor-pointer">
-                    <HomeIcon />
-                    Dashboard
+                  <DropdownMenuItem asChild className="py-2 cursor-pointer">
+                    <Link href={`/dashboard`}>
+                      <HomeIcon />
+                      Dashboard
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem

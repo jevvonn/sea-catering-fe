@@ -36,6 +36,7 @@ import { useSession } from "@/hooks/use-auth";
 import { subscribeSchema } from "@/schema/subscription";
 import { toast } from "sonner";
 import { createSubscription } from "@/services/subscription";
+import { useRouter } from "next/navigation";
 
 const DAYS = [
   "Monday",
@@ -49,6 +50,7 @@ const DAYS = [
 
 const SubscribeForm = () => {
   const session = useSession();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [plans, setPlans] = useState<Plan[] | null>(null);
   const [selectedMealPlan, setSelectedMealPlan] = useState<Plan["id"]>("diet");
@@ -116,6 +118,7 @@ const SubscribeForm = () => {
     if (!result.errors) {
       toast.success("You've successfully subscribed!");
       form.reset();
+      router.push("/dashboard");
     } else {
       toast.error(result.errors);
     }
