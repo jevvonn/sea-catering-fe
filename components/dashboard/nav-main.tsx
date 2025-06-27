@@ -17,7 +17,7 @@ const NavMain = ({
   title,
   items,
 }: {
-  title: string;
+  title?: string;
   items: {
     title: string;
     url: string;
@@ -29,16 +29,19 @@ const NavMain = ({
 
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{title}</SidebarGroupLabel>
+      {title && <SidebarGroupLabel>{title}</SidebarGroupLabel>}
       <SidebarMenu>
         {items.map((item, key) => (
           <SidebarMenuItem key={`${item.title + key}`}>
             <SidebarMenuButton
               asChild
-              className={cn("cursor-pointer", {
-                "bg-primary text-primary-foreground":
-                  item.actives.includes(pathName),
-              })}
+              className={cn(
+                "cursor-pointer hover:bg-primary hover:text-primary-foreground transition-all",
+                {
+                  "bg-primary text-primary-foreground":
+                    item.actives.includes(pathName),
+                }
+              )}
             >
               <Link href={item.url}>
                 {item.icon && <item.icon />}

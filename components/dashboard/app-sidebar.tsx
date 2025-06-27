@@ -23,6 +23,12 @@ import { useSession } from "@/hooks/use-auth";
 
 const userNav = [
   {
+    title: "Home",
+    url: "/dashboard",
+    icon: HomeIcon,
+    actives: ["/dashboard"],
+  },
+  {
     title: "Subscriptions",
     url: "/dashboard/subscriptions",
     icon: SoupIcon,
@@ -38,13 +44,7 @@ const userNav = [
 
 const adminNav = [
   {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: HomeIcon,
-    actives: ["/dashboard"],
-  },
-  {
-    title: "Users",
+    title: "All Subscriptions",
     url: "/dashboard/users/subscriptions",
     icon: BanknoteIcon,
     actives: ["/dashboard/users/subscriptions"],
