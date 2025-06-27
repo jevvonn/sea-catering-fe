@@ -22,7 +22,7 @@ const SubscribePlan = async () => {
         </h2>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4 py-6 md:py-12">
+      <div className="md:max-w-2xl mx-auto py-6 md:py-12">
         <SubscribeForm />
       </div>
     </main>

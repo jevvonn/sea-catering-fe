@@ -1,13 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  BanknoteIcon,
-  HomeIcon,
-  SoupIcon,
-  User2Icon,
-  UsersIcon,
-} from "lucide-react";
+import { BanknoteIcon, HomeIcon, User2Icon, UsersIcon } from "lucide-react";
 
 import NavMain from "./nav-main";
 import NavUser from "./nav-user";
@@ -27,12 +21,6 @@ const userNav = [
     url: "/dashboard",
     icon: HomeIcon,
     actives: ["/dashboard"],
-  },
-  {
-    title: "Subscriptions",
-    url: "/dashboard/subscriptions",
-    icon: SoupIcon,
-    actives: ["/dashboard/subscriptions"],
   },
   {
     title: "Profile",
