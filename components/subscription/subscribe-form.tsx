@@ -37,6 +37,7 @@ import { subscribeSchema } from "@/schema/subscription";
 import { toast } from "sonner";
 import { createSubscription } from "@/services/subscription";
 import { useRouter } from "next/navigation";
+import { formatPrice } from "@/lib/utils";
 
 const DAYS = [
   "Monday",
@@ -201,14 +202,7 @@ const SubscribeForm = () => {
                           </p>
                         </div>
                         <div>
-                          <p>
-                            {new Intl.NumberFormat("id-ID", {
-                              style: "currency",
-                              currency: "IDR",
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 0,
-                            }).format(plan.price)}
-                          </p>
+                          <p>{formatPrice(plan.price)}</p>
                           <p className="text-xs text-right text-muted-foreground">
                             per meal
                           </p>
@@ -414,12 +408,7 @@ const SubscribeForm = () => {
               </Popover>
             </div>
             <p className="text-xl md:text-2xl font-bold">
-              {new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-              }).format(totalPrice)}
+              {formatPrice(totalPrice)}
             </p>
           </div>
         </div>
