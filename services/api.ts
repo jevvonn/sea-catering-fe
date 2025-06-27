@@ -16,12 +16,14 @@ export const handleApiErorr = <T = unknown>(error: unknown): ApiResponse<T> => {
         return {
           message: errorData.message,
           errors: errors.map((err) => err.message).join(","),
+          code: error.response?.status || 500,
         };
       }
 
       return {
         message: errorData.message,
         errors: errorData.errors,
+        code: error.response?.status || 500,
       };
     }
   }
@@ -29,5 +31,6 @@ export const handleApiErorr = <T = unknown>(error: unknown): ApiResponse<T> => {
   return {
     message: "An error occurred. Please try again later.",
     errors: error instanceof Error ? error.message : "Unknown error",
+    code: 500,
   };
 };

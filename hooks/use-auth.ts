@@ -31,6 +31,11 @@ export const useSession = (props?: Props): Session | null => {
         },
       });
     }
+
+    if (response.code === 401) {
+      logout();
+      router.push("/sign-in");
+    }
   }, [router]);
 
   useEffect(() => {

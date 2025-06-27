@@ -34,6 +34,7 @@ export const getUserSession = async (): Promise<ApiResponse<User>> => {
     return {
       message: "Unauthorized",
       errors: "No token provided",
+      code: 401,
     };
   }
 
