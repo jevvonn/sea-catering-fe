@@ -1,11 +1,19 @@
 import SubscribeForm from "@/components/subscription/subscribe-form";
+import { getSession } from "@/lib/auth/get-session";
 import { Metadata } from "next";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Subscribe Meal Plan",
 };
 
-const SubscribePlan = () => {
+const SubscribePlan = async () => {
+  const session = await getSession();
+
+  if (!session) {
+    return redirect("/sign-in");
+  }
+
   return (
     <main className="pt-5 md:pt-10 px-4 md:px-10 relative">
       <div className="max-w-6xl mx-auto px-4 pb-2">
