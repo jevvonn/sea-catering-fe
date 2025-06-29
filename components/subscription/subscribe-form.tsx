@@ -50,7 +50,7 @@ const DAYS = [
 ];
 
 const SubscribeForm = () => {
-  const session = useSession();
+  const { session } = useSession();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [plans, setPlans] = useState<Plan[] | null>(null);

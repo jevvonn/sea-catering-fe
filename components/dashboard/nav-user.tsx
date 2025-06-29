@@ -23,7 +23,7 @@ import Link from "next/link";
 
 const NavUser = () => {
   const { isMobile } = useSidebar();
-  const session = useSession();
+  const { session } = useSession();
 
   return (
     <SidebarMenu>

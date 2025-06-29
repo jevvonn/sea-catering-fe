@@ -51,9 +51,7 @@ const adminNav = [
 ];
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const session = useSession({
-    authenticated: true,
-  });
+  const { session } = useSession(true);
 
   return (
     <Sidebar collapsible="icon" {...props}>

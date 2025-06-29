@@ -9,7 +9,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const DashboardPage = () => {
-  const session = useSession();
+  const { session } = useSession();
   const [subscriptions, setSubscriptions] = useState<Subscription[] | null>(
     null
   );

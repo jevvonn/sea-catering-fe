@@ -33,7 +33,7 @@ const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const session = useSession();
+  const { session } = useSession();
 
   const navigationLinks: { title: string; href: string; active: string[] }[] = [
     {
