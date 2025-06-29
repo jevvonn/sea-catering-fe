@@ -1,12 +1,7 @@
 "use client";
 
 import * as React from "react";
-import {
-  BanknoteIcon,
-  HomeIcon,
-  NotepadTextIcon,
-  UsersIcon,
-} from "lucide-react";
+import { BanknoteIcon, HomeIcon, NotepadTextIcon } from "lucide-react";
 
 import NavMain from "./nav-main";
 import NavUser from "./nav-user";
@@ -41,12 +36,6 @@ const adminNav = [
     url: "/dashboard/subscriptions/report",
     icon: NotepadTextIcon,
     actives: ["/dashboard/subscriptions/report"],
-  },
-  {
-    title: "Users",
-    url: "/dashboard/users",
-    icon: UsersIcon,
-    actives: ["/dashboard/users"],
   },
 ];
 
