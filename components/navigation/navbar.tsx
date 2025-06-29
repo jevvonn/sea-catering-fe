@@ -33,7 +33,7 @@ const Navbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
-  const session = useSession();
+  const { session } = useSession();
 
   const navigationLinks: { title: string; href: string; active: string[] }[] = [
     {
@@ -124,9 +124,11 @@ const Navbar = () => {
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="py-2 cursor-pointer">
-                  <HomeIcon />
-                  Dashboard
+                <DropdownMenuItem asChild className="py-2 cursor-pointer">
+                  <Link href={`/dashboard`}>
+                    <HomeIcon />
+                    Dashboard
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
@@ -222,9 +224,11 @@ const Navbar = () => {
                     </div>
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="py-2 cursor-pointer">
-                    <HomeIcon />
-                    Dashboard
+                  <DropdownMenuItem asChild className="py-2 cursor-pointer">
+                    <Link href={`/dashboard`}>
+                      <HomeIcon />
+                      Dashboard
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem

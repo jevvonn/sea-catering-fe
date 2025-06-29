@@ -32,6 +32,12 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { getPlans } from "@/services/plans";
+import { useSession } from "@/hooks/use-auth";
+import { subscribeSchema } from "@/schema/subscription";
+import { toast } from "sonner";
+import { createSubscription } from "@/services/subscription";
+import { useRouter } from "next/navigation";
+import { formatPrice } from "@/lib/utils";
 
 const DAYS = [
   "Monday",
@@ -43,33 +49,18 @@ const DAYS = [
   "Sunday",
 ];
 
-const formSchema = z.object({
-  fullName: z.string().min(3, {
-    message: "Username must be at least 3 characters.",
-  }),
-  phoneNumber: z
-    .string()
-    .min(1, { message: "Phone number must be at least 1 number." })
-    .max(15, { message: "Phone number must not exceed 15 number." }),
-  mealPlan: z.enum(["diet", "protein", "royal"]),
-  mealType: z.array(z.string()).min(1, {
-    message: "Please select at least one meal type.",
-  }),
-  deliveryDays: z.array(z.string()).min(1, {
-    message: "Please select at least one day.",
-  }),
-  allergies: z.array(z.string()).min(0),
-});
-
 const SubscribeForm = () => {
+  const { session } = useSession();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   const [plans, setPlans] = useState<Plan[] | null>(null);
   const [selectedMealPlan, setSelectedMealPlan] = useState<Plan["id"]>("diet");
 
   const [totalPrice, setTotalPrice] = useState(0);
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const form = useForm<z.infer<typeof subscribeSchema>>({
+    resolver: zodResolver(subscribeSchema),
     defaultValues: {
-      fullName: "",
+      name: "",
       phoneNumber: "",
       mealPlan: selectedMealPlan,
       mealType: [],
@@ -99,6 +90,12 @@ const SubscribeForm = () => {
   }, []);
 
   useEffect(() => {
+    if (session) {
+      form.setValue("name", session.user?.name || "");
+    }
+  }, [session, form]);
+
+  useEffect(() => {
     form.setValue("mealPlan", selectedMealPlan);
   }, [selectedMealPlan, form]);
 
@@ -115,8 +112,19 @@ const SubscribeForm = () => {
     setTotalPrice(total);
   }, [selectedMealPlan, form, mealType, deliveryDays, plans]);
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(data: z.infer<typeof subscribeSchema>) {
+    setIsLoading(true);
+    const result = await createSubscription(data);
+
+    if (!result.errors) {
+      toast.success("You've successfully subscribed!");
+      form.reset();
+      router.push("/dashboard");
+    } else {
+      toast.error(result.errors);
+    }
+
+    setIsLoading(false);
   }
 
   return (
@@ -124,14 +132,14 @@ const SubscribeForm = () => {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div className="flex gap-4 md:gap-2 flex-col w-full md:flex-row items-center">
           <FormField
-            name="fullName"
+            name="name"
             control={form.control}
             render={({ field }) => (
               <FormItem className="flex-1 w-full md:w-auto">
                 <FormLabel>Full Name</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <Input placeholder="Jevon Mozart" {...field} />
+                    <Input required placeholder="Jevon Mozart" {...field} />
                   </div>
                 </FormControl>
                 <FormMessage className="text-sm" />
@@ -151,6 +159,7 @@ const SubscribeForm = () => {
                       +62
                     </span>
                     <Input
+                      required
                       placeholder="81234567890"
                       type="tel"
                       className="pl-10"
@@ -193,14 +202,7 @@ const SubscribeForm = () => {
                           </p>
                         </div>
                         <div>
-                          <p>
-                            {new Intl.NumberFormat("id-ID", {
-                              style: "currency",
-                              currency: "IDR",
-                              minimumFractionDigits: 0,
-                              maximumFractionDigits: 0,
-                            }).format(plan.price)}
-                          </p>
+                          <p>{formatPrice(plan.price)}</p>
                           <p className="text-xs text-right text-muted-foreground">
                             per meal
                           </p>
@@ -406,18 +408,13 @@ const SubscribeForm = () => {
               </Popover>
             </div>
             <p className="text-xl md:text-2xl font-bold">
-              {new Intl.NumberFormat("id-ID", {
-                style: "currency",
-                currency: "IDR",
-                minimumFractionDigits: 0,
-                maximumFractionDigits: 0,
-              }).format(totalPrice)}
+              {formatPrice(totalPrice)}
             </p>
           </div>
         </div>
 
         <div>
-          <Button type="submit" className="w-full">
+          <Button type="submit" disabled={isLoading} className="w-full">
             Subscribe Now
           </Button>
         </div>

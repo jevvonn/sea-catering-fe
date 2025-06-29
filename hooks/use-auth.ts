@@ -1,46 +1,30 @@
-import { getUserSession } from "@/services/auth";
-import { Session } from "@/types/auth";
-import { deleteCookie, getCookie } from "cookies-next/client";
+// hooks/useSession.ts
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { toast } from "sonner";
+import { useSessionStore } from "@/stores/use-session-store";
 
-type Props = {
-  authenticated?: boolean;
-};
-
-export const useSession = (props?: Props): Session | null => {
+export const useSession = (authenticated = false) => {
   const router = useRouter();
-  const [session, setSession] = useState<Session | null>(null);
-
-  const logout = () => {
-    deleteCookie("token");
-  };
-
-  const getSession = useCallback(async () => {
-    const response = await getUserSession();
-
-    if (response.data) {
-      setSession({
-        user: response.data,
-        isAuthenticated: true,
-        logout: () => {
-          logout();
-          toast.success("You have been logged out successfully.");
-          router.push("/sign-in");
-        },
-      });
-    }
-  }, [router]);
+  const { session, loading, fetchSession, clearSession } = useSessionStore();
 
   useEffect(() => {
-    const token = getCookie("token");
-    if (!token && props?.authenticated) {
+    const token = document.cookie.includes("token");
+
+    if (!token && authenticated) {
       router.push("/sign-in");
     }
 
-    getSession();
-  }, [router, getSession, props?.authenticated]);
+    if (!session) {
+      fetchSession();
+    }
+  }, [authenticated, fetchSession, router, session]);
 
-  return session;
+  useEffect(() => {
+    if (!loading && !session && authenticated) {
+      clearSession();
+      router.push("/sign-in");
+    }
+  }, [loading, session, authenticated, clearSession, router]);
+
+  return { session, loading };
 };

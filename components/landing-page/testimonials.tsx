@@ -99,7 +99,7 @@ const TestimonialsSection = () => {
 
 function TestimonialForm({ className, ...props }: React.ComponentProps<"div">) {
   const [isLoading, setIsLoading] = useState(false);
-  const session = useSession();
+  const { session } = useSession();
 
   const form = useForm<z.infer<typeof testimonialSchema>>({
     resolver: zodResolver(testimonialSchema),
