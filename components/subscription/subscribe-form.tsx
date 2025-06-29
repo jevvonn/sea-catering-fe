@@ -342,6 +342,9 @@ const SubscribeForm = () => {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Allergies</FormLabel>
+              <small className="text-xs italic">
+                *Hit enter for assigning your allergies
+              </small>
               <FormControl>
                 <TagsInput
                   value={field.value}
