@@ -234,9 +234,7 @@ const SubscriptionReportDashboard = () => {
         )}
       </div>
 
-      {/* Detailed Breakdown */}
       <div className="grid gap-6 md:grid-cols-2">
-        {/* Recent Subscriptions */}
         <Card className="shadow-none">
           <CardHeader>
             <CardTitle>Recent Subscriptions</CardTitle>
@@ -247,6 +245,12 @@ const SubscriptionReportDashboard = () => {
           <CardContent>
             <div className="space-y-4">
               {subscriptions
+                .sort((a, b) => {
+                  return (
+                    new Date(a.created_at).getTime() -
+                    new Date(b.created_at).getTime()
+                  );
+                })
                 .filter((sub) => {
                   const createdDate = new Date(sub.created_at);
                   return (
@@ -265,14 +269,10 @@ const SubscriptionReportDashboard = () => {
                     </div>
                     <div className="text-right space-y-1">
                       <Badge
-                        variant={
-                          sub.status === "ACTIVE"
-                            ? "default"
-                            : sub.is_paused
-                            ? "secondary"
-                            : "destructive"
-                        }
-                        className="text-xs"
+                        variant={sub.is_paused ? "default" : "destructive"}
+                        className={cn("text-xs", {
+                          "bg-green-400": sub.status === "ACTIVE",
+                        })}
                       >
                         {sub.status}
                       </Badge>
@@ -286,7 +286,6 @@ const SubscriptionReportDashboard = () => {
           </CardContent>
         </Card>
 
-        {/* Plan Distribution */}
         <Card className="shadow-none">
           <CardHeader>
             <CardTitle>Plan Distribution</CardTitle>
