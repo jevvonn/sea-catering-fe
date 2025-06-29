@@ -2,7 +2,7 @@
 
 import { create } from "zustand";
 import { getUserSession } from "@/services/auth";
-import { deleteCookie } from "cookies-next";
+import { deleteCookie } from "cookies-next/client";
 import { Session } from "@/types/auth";
 
 interface SessionState {
