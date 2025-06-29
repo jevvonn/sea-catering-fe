@@ -3,7 +3,11 @@ import { subscribeSchema } from "@/schema/subscription";
 import { z } from "zod";
 import { handleApiErorr } from "./api";
 import { getCookie } from "cookies-next/client";
-import { Subscription, updateSubscriptionRequest } from "@/types/subscription";
+import {
+  Subscription,
+  SubscriptionReportResponse,
+  updateSubscriptionRequest,
+} from "@/types/subscription";
 import { format } from "date-fns";
 
 export const createSubscription = async (
@@ -58,6 +62,39 @@ export const getSubscriptions = async (): Promise<
 
   try {
     const response = await api.get("/subscriptions", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    return handleApiErorr(error);
+  }
+};
+
+export const getSubscriptionsReport = async (
+  startDate?: Date,
+  endDate?: Date
+): Promise<ApiResponse<SubscriptionReportResponse>> => {
+  const token = getCookie("token");
+  if (!token) {
+    return {
+      message: "Unauthorized",
+      errors: "No token provided",
+    };
+  }
+
+  let url = `/subscriptions/report`;
+
+  if (startDate && endDate) {
+    const formattedStartDate = format(startDate, "dd-MM-yyyy");
+    const formattedEndDate = format(endDate, "dd-MM-yyyy");
+
+    url += `?start_date=${formattedStartDate}&end_date=${formattedEndDate}`;
+  }
+
+  try {
+    const response = await api.get(url, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

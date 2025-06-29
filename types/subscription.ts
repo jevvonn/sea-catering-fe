@@ -28,3 +28,10 @@ export type updateSubscriptionRequest = {
   pause_end_date: Date | null;
   status: "ACTIVE" | "CANCELLED" | null;
 };
+
+export type SubscriptionReportResponse = {
+  active_subscriptions_by_date: number;
+  total_revenue: number;
+  total_active_subscriptions: number;
+  total_revenue_by_date: number;
+};
