@@ -106,7 +106,7 @@ Follow these instructions to get the frontend running on your local machine for 
     NEXT_PUBLIC_API_URL="http://localhost:3001/api"
     ```
 
-    _Note: The `NEXT_PUBLIC_` prefix is required to expose the variable to the browser.\_
+    _Note: The `NEXT_PUBLIC_` prefix is required to expose the variable to the browser._
 
 4.  **Run the development server:**
 
@@ -160,4 +160,5 @@ The project uses the Next.js App Router for a feature-colocated structure.
 ## Contact
 
 Jevon Mozart - [@j_vmcb](https://instagram.com/j_vmcb) - [jmcb1602@gmail.com](mailto:jmcb1602@gmail.com)
+
 Project Link: [https://github.com/jevvonn/sea-catering-fe](https://github.com/jevvonn/sea-catering-fe)
